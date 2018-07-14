@@ -81,12 +81,17 @@ a {
     font-size: 17px;
 }
 
+.nav a:link {
+    color: #ddd;
+}
 .nav a:hover {
     color: #fff;
 }
 
-.active {
-    color: #fff;
+#active {
+    color: #cc9933;
+    /* text-decoration: underline;
+    background-color: #000; */
 }
 
 .nav .icon {
@@ -453,7 +458,7 @@ ul {
     background: #ddd;
   }
   .header {
-    background-color: #f44336;
+    background-color: #cc9933;
     padding: 30px 40px 10px 40px;
   }
   
