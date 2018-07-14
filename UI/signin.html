@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang = "en">
+   
+   <head>
+        <meta charset = "UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+        <link rel="shortcut icon" href="user/images/logo.png" type="image/x-icon">
+        <meta name="description" content="My Diary Application">
+        <title>My Diary</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel = "stylesheet" type = "text/css" href = "user/css/style.css">
+   </head>
+   
+   <body>
+      <main>
+          <header>
+                <div class="nav" id="nav">
+                    <a href="#home"><img src="user/images/logo.png" id="app-logo"/>
+                    <span id="app-name">My Diary</span></a>          
+                    <a href="#home" class="active">Home</a>
+                    <a href="#">Sign Up</a>
+                    <a href="javascript:void(0);">Sign In</a>
+                    <a href="javascript:void(0);" class="icon" onclick="toggleMenu(this)">
+                        <div class="bar1"></div>
+                        <div class="bar2"></div>
+                        <div class="bar3"></div>
+                    </a>
+                </div>
+          </header>
+          <section>
+                <a class="hiddenanchor" id="toReset"></a>
+                <a class="hiddenanchor" id="toSignin"></a>
+                <div id="signin" class="animate form-container">
+              <form id="signInForm" onsubmit="return false;">
+                    <h1>Sign In</h1><br/>
+                        <label for="name"><b>Your Username</b></label>
+                        <input type="text" placeholder="Username or Email" name="username" required>
+                    
+                        <label for="psw"><b>Your Password</b></label>
+                        <input type="password" placeholder="Password" name="password" required>
+                    
+                        <button type="submit" class="big-btn"><i class="fa fa-lock"></i>&nbsp;Sign In</button>
+                        <div><strong>Don't have an account? <a href="signup.html">Sign up</a> | Forgot Password? <a href="#toReset">Click me</a></strong></div>
+                    </form>
+                </div>
+
+                <div id="reset" class="animate form-container">
+                <form id="resetForm" onsubmit="return false;">
+                        <h1>Reset Password</h1><br/>
+                        <div id="otpGroup" class="">
+                            <label for="name"><b>Your Email</b></label>
+                            <input type="text" placeholder="Your Email" name="email" id="email" required>
+                        </div>
+                        
+                        <div id="resetGroup" class="hidden">
+                            <label for="psw"><b>OTP</b></label>
+                            <input type="password" placeholder="OTP" name="otp" id="otp" required>
+
+                            <label for="psw"><b>New Password</b></label>
+                            <input type="password" placeholder="New Password" name="password" id="password" required>
+
+                            <label for="psw"><b>Confirm Password</b></label>
+                            <input type="password" placeholder="Confirm Password" name="confirm" id="confirm" required>
+                        </div>
+                    
+                        <button type="submit" id="btnReset" class="big-btn"><i id="resetSpin" class="fa fa-lock"></i>&nbsp;Request OTP</button>
+                        <div><strong>Don't have an account? <a href="signup.html">Sign up</a> | Have an account? <a href="#toSignin">Sign in</a></strong></div>
+                    </form>
+                </div>
+          </section>
+      </main>
+      <script type="text/javascript" src="user/js/interactive.js" async></script>
+   </body>
+   
+</html>
