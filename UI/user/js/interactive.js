@@ -2,172 +2,125 @@
  * 
  * @author: Eneh, James 
  */
-function toggleMenu(X) {
-    X.classList.toggle("change");
-    var x = document.getElementById("nav");
-    if (x.className === "nav") {
-        x.className += " responsive";
-    } else {
-        x.className = "nav";
+
+$( document ).ready ( function () {
+
+  function makeToast (message) {
+    $("#toast").html(message);
+    $("#toast").addClass("show");
+    setTimeout(function(){ $("#toast").removeClass("show") }, 3000);
+  }
+
+  $("#signUpForm").on("submit", function () {
+    const username = $("#username").val().trim()
+    const alphaNum = /^[a-z0-9]+$/i;
+    if (username == "") {
+      makeToast("Username is required");
+      return false;
+    } else if (!alphaNum.test(username)) {
+      makeToast("Username can only contain letters and number");
+      return false;
+    } else if (!isNaN(username.charAt(0))) {
+      makeToast("Username cannot start with a number");
+      return false;
     }
-}
-
-function openEditForm (id, title, desc, conclude) {
-    const editForm = document.getElementById("entryDiv");
-    if (! editForm.style.maxHeight){
-      editForm.style.maxHeight = editForm.scrollHeight + "px";
-    } 
-    $("#entryId").val(id);
-    $("#title").val(title);
-    $("#desc").val(desc);
-    $("#conclude").val(conclude)
-    $("#submit").val("Save Changes");
-  }
-  function resetEntryForm () {
-    $("#entryId").val("");
-    $("#title").val("");
-    $("#desc").val("");
-    $("#conclude").val("")
-    $("#submit").val("Add Entry");
-  }
-
-var list = document.querySelector('ul');
-list.addEventListener('click', function(ev) {
-  if (ev.target.tagName === 'LI') {
-    ev.target.classList.toggle('checked');
-  }
-}, false);
-
-var entryList = [
-    {
-        "id": 2,
-        "title": "My Paris Trip",
-        "desc": "I enjoyed every moment of it, France made my year",
-        "conclude": "That was cool",
-        "date": "10-09-2016"
-    },
-    {
-        "id": 3,
-        "title": "My Isreal Visit",
-        "desc": "I was wow in Jeruselem",
-        "conclude": "Solomon's temple is out of this world, really a place to...",
-        "date": "15-06-2017"
+    const emailRegEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const email = $("#email").val().trim()
+    if(email == "") {
+      makeToast("Email is required");
+      return false;
+    } else if (!emailRegEx.test(email)) {
+      makeToast("Invalid email format");
+      return false;
     }
-];
-function renderEntryList (list) {
-    list.forEach(element => {
-        var span = document.createElement("span");
-        var txt = document.createTextNode(element["title"]+".. "+element["date"]);
-        span.appendChild(txt);
+    const password = $("#password").val();
+    if (password.length < 10) {
+      makeToast("Password not up to 10 characters");
+      return false;
+    } else if (/^[a-z]+$/i.test(password) || /^[0-9]+$/i.test(password)) {
+      makeToast("Weak password: mix letters, numbers, and special characters");
+      return false;
+    } else if ($("#confirm").val() != password) {
+      makeToast("Password and confirm password not match");
+      return false;
+    }
+    $("#btnSignUp").html('<i class="fa fa-spinner fa-spin"></i> Wait');
+    //http request
+    //demo
+    setTimeout(function(){ $("#btnSignUp").html("Sign Up"); makeToast("Form submitted!"); }, 5000);
+  });
 
-        var i1 = document.createElement("i");
-        i1.setAttribute("class", "fa fa-trash");
-        txt = document.createTextNode(" Delete");
-        i1.appendChild(txt);
-        var btn1 = document.createElement("button");
-        btn1.setAttribute("class", "danger");
-        btn1.appendChild(i1);
-        
-        var i2 = document.createElement("i");
-        i2.setAttribute("class", "fa fa-angle-down");
-        var btn2 = document.createElement("button");
-        btn2.setAttribute("class", "collapsible");
-        btn2.appendChild(i2);
-        
-        var readDiv = document.createElement("div");
-        var br = document.createElement("br");
+  $("#signInForm").on("submit", function() {
+    const username = $("#username").val();
+    if($("#username").val().trim() == "") {
+      makeToast("Username is required");
+      return false;
+    }
+    if($("#password").val() == "") {
+      makeToast("Password is required");
+      return false;
+    }
 
-        const strong1 = document.createElement("strong");
-        txt = document.createTextNode("Title: ");
-        strong1.appendChild(txt);
-        readDiv.appendChild(strong1);
-        const small1 = document.createElement("small");
-        txt = document.createTextNode(element["title"]);
-        small1.appendChild(txt);
-        readDiv.appendChild(small1);
-        readDiv.appendChild(br);
+    $("#btnSignIn").html('<i class="fa fa-spinner fa-spin"></i> Authenticating');
+    //http request
+    //demo
+    setTimeout(function(){ $("#btnSignIn").html('<i class="fa fa-lock"></i> Sign In'); window.location.replace("user/dashboard.html") }, 5000);
 
-        const strong2 = document.createElement("strong");
-        txt = document.createTextNode("Description: ");
-        strong2.appendChild(txt);
-        readDiv.appendChild(strong2);
-        const small2 = document.createElement("small");
-        txt = document.createTextNode(element["desc"]);
-        small2.appendChild(txt);
-        readDiv.appendChild(small2);
-        br = document.createElement("br");
-        readDiv.appendChild(br);
+  });
 
-        const strong3 = document.createElement("strong");
-        txt = document.createTextNode("Conclusion: ");
-        strong3.appendChild(txt);
-        readDiv.appendChild(strong3);
-        const small3 = document.createElement("small");
-        txt = document.createTextNode(element["conclude"]);
-        small3.appendChild(txt);
-        readDiv.appendChild(small3);
-        br = document.createElement("br");
-        readDiv.appendChild(br);
+  $("#entryForm").on("submit", function () {
+    if ($("#title").val().trim() == "") {
+      makeToast("Entry title is required");
+      return false;
+    } else if ($("#title").val().length > 50) {
+      makeToast("Title: Max length of 50 exceeded");
+      return false;
+    }
 
-        const strong4 = document.createElement("strong");
-        txt = document.createTextNode("Date: ");
-        strong4.appendChild(txt);
-        readDiv.appendChild(strong4);
-        const small4 = document.createElement("small")
-        txt = document.createTextNode(element["date"]);
-        small4.appendChild(txt);
-        readDiv.appendChild(small4);
-        br = document.createElement("br");
-        readDiv.appendChild(br);
+    if ($("#desc").val().trim() == "") {
+      makeToast("Entry description is required");
+      return false;
+    }
 
-        const a = document.createElement("a");
-        a.setAttribute("href","#entryDiv");
-        a.setAttribute("onclick",`openEditForm("${element["id"]}", "${element["title"]}", "${element["desc"]}", "${element["conclude"]}")`);
-        txt = document.createTextNode("Make changes");
-        a.appendChild(txt);
-        readDiv.appendChild(a);
-
-        const p = document.createElement("p");
-        p.appendChild(readDiv);
-
-        const content = document.createElement("div");
-        content.setAttribute("class", "content");
-        content.appendChild(p);
-
-        const div = document.createElement("div");
-        div.appendChild(span);
-        div.appendChild(btn1);
-        div.appendChild(btn2);
-        div.appendChild(content);
-        const li = document.createElement("li");
-        li.appendChild(div);
-
-        document.getElementById("myUL").appendChild(li);
-
-    });
-}
-
-renderEntryList (entryList);
-
-var coll = document.getElementsByClassName("collapsible");
-var j;
-
-for (j = 0; j < coll.length; j++) {
-  coll[j].addEventListener("click", function() {
-    resetEntryForm ();
-    this.classList.toggle("active");
-    var content = this.nextElementSibling;
-    const toggleIcon = this.firstElementChild;
-    if (content.style.maxHeight){
-      content.style.maxHeight = null;
-      if (toggleIcon) {
-        toggleIcon.setAttribute("class","fa fa-angle-down");
-      }
+    $("#submit").html('<i class="fa fa-spinner fa-spin"></i> Wait');
+    if ($("#submit").val() == "add") {
+      //http POST request to add new entry
+      //demo
+      setTimeout(function(){ $("#submit").html('<i class="fa fa-save"></i> Add Entry'); makeToast("Entry added successfully"); }, 5000);
     } else {
-      content.style.maxHeight = content.scrollHeight + "px";
-      if (toggleIcon) {
-        toggleIcon.setAttribute("class","fa fa-angle-up")
-        }
+      //http PUT request to modify entry
+      //demo
+      setTimeout(function(){ $("#submit").html('<i class="fa fa-save"></i> Save Changes'); makeToast("Entry updated successfully"); }, 5000);
     }
   });
+
+  $("#searchForm").on("submit", function () {
+    if ($("#mySearch").val().trim() != "") {
+      //http GET request to search entry data-store
+      //demo
+      $("#btnSearch").html('<i class="fa fa-spinner fa-spin"></i>');
+      setTimeout(function(){ $("#btnSearch").html('<i class="fa fa-search"></i>'); }, 5000);
+    }
+  });
+
+  $("#picForm").on("submit", function () {
+    if ($("#profilePic").val().trim == "") {
+      makeToast("Image is required");
+      return false;
+    }
+
+    $("#savePic").html('<i class="fa fa-spinner fa-spin"></i>');
+    setTimeout(function(){ $("#savePic").html('<i class="fa fa-save"></i> Save'); }, 5000);
+  });
+
+});
+
+function toggleMenu(X) {
+  X.classList.toggle("change");
+  var x = document.getElementById("nav");
+  if (x.className === "nav") {
+      x.className += " responsive";
+  } else {
+      x.className = "nav";
+  }
 }

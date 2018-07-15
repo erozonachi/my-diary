@@ -9,7 +9,7 @@
         <title>MyDiary</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel = "stylesheet" type = "text/css" href = "css/style.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" async></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
    </head>
    
    <body>
@@ -20,7 +20,7 @@
                 <span id="app-name">MyDiary</span></a>          
                 <a href="#toEntries" id="active">Dashboard</a>
                 <a href="#toProfile">User Profile</a>
-                <a href="#">Sign out</a>
+                <a href="../index.html">Sign out</a>
                 <a href="javascript:void(0);" class="icon" onclick="toggleMenu(this)">
                     <!--i class="fa fa-bars"></i-->
                     <div class="bar1"></div>
@@ -34,20 +34,20 @@
           <div id="allEntries" class="animate form-container">
                 <div id="myEntries" class="header">
                   <h2>My Diary Entries</h2><br/>
-                  <span onclick="" class="addBtn collapsible">New Entry</span>
+                  <div><span onclick="" class="addBtn collapsible">Toggle Entry Form</span></div>
                   <div id="entryDiv" class="content">
                     <p>
-                    <form action="" onsubmit="return false;">
+                    <form id="entryForm" onsubmit="return false;">
                       <input type="hidden" id="entryId" value=""/>
                       <label for="title"><b>Entry Title</b></label>
                     <div class="tooltip">
-                      <input type="text" id="title" name="title" placeholder="Give entry a title">
+                      <input type="text" id="title" name="title" placeholder="Give entry a title" required>
                       <span class="tooltiptext">Title not more than 50 characters</span>
                     </div>
                       
-                      <label for="desc"><b>Detailed Description</b></label>
+                      <label for="desc"><b>Description</b></label>
                     <div class="tooltip">
-                      <textarea id="desc" name="desc" placeholder="Describe entry"></textarea>
+                      <textarea id="desc" name="desc" placeholder="Describe entry" required></textarea>
                       <span class="tooltiptext">Describe entry</span>
                     </div>
                       
@@ -57,7 +57,8 @@
                         <span class="tooltiptext">Conclude entry (not required)</span>
                     </div>
                       
-                      <input id="submit" type="submit" value="Add Entry">
+                      <button type="submit" id="submit" class="submit" value="add"><i class="fa fa-save"></i>&nbsp;Add Entry</button>
+                      <div id="toast"></div>
                     </form>
                     </p>
                   </div>
@@ -65,14 +66,14 @@
                 </div>
                 <div>
                   <div>
-                      <div class="search-container"><input class="search-box" type="text" id="myInput" placeholder="Search entries..."></div>
-                      <div class="one-in-four"><button class="btn" id="btnSearch"><i class="fa fa-search"></i></button></div>
+                     <form id="searchForm" onsubmit="return false;"><div class="search-container"><input class="search-box" type="text" id="mySearch" placeholder="Search entries..."></div>
+                      <div class="one-in-five"><button type="submit" class="btn" id="btnSearch"><i class="fa fa-search"></i></button></div></form>
                   </div>
                 <ul id="myUL">
-                    <li class=""><div>
+                    <li class=""><div><div class="listHead">
                         <span>First day in Andela.. 25-06-2018</span>
-                        <button class="danger"><i class="fa fa-trash">&nbsp;Delete</i></button>
-                        <button class="collapsible"><i class="fa fa-angle-down"></i></button>
+                        <button class="danger del"><i class="fa fa-trash">&nbsp;Delete</i></button>
+                        <button class="collapsible toggle"><i class="fa fa-angle-down"></i></button></div>
                       <div class="content">
                         <p>
                             <div class="readView">
@@ -88,10 +89,10 @@
                             </div>
                         </p>
                       </div></div></li>
-                    <li class=""><div>
+                    <li class=""><div><div class="listHead">
                         <span>My best birthday bash.. 07-07-2018</span>
-                        <button class="danger"><i class="fa fa-trash"></i>&nbsp;Delete</button>
-                        <button class="collapsible"><i class="fa fa-angle-down"></i></button>
+                        <button class="danger del"><i class="fa fa-trash"></i>&nbsp;Delete</button>
+                        <button class="collapsible toggle"><i class="fa fa-angle-down"></i></button></div>
                       <div class="content">
                         <p><div>
                                 <strong>Title</strong>
@@ -105,10 +106,10 @@
                             <a href="#entryDiv" onclick="openEditForm('2','London Tour', 'It was awesome', 'It was fun');">Make changes</a>
                         </div></p>
                       </div></div></li>
-                  <li><div>
+                  <li><div><div class="listHead">
                     <span>My first day in gym... 07-07-2018</span>
-                    <button class="danger"><i class="fa fa-trash"></i>&nbsp;Delete</button>
-                    <button class="collapsible"><i class="fa fa-angle-down"></i></button>
+                    <button class="danger del"><i class="fa fa-trash"></i>&nbsp;Delete</button>
+                    <button class="collapsible toggle"><i class="fa fa-angle-down"></i></button></div>
                   <div class="content">
                     <p>
                       <div>
@@ -124,10 +125,10 @@
                       </div>
                     </p>
                   </div></div></li>
-                  <li class=""><div>
+                  <li class=""><div><div class="listHead">
                       <span>First holidays in Toronto.. 03-05-2018</span>
-                      <button class="danger"><i class="fa fa-trash"></i>&nbsp;Delete</button>
-                      <button class="collapsible"><i class="fa fa-angle-down"></i></button>
+                      <button class="danger del"><i class="fa fa-trash"></i>&nbsp;Delete</button>
+                      <button class="collapsible toggle"><i class="fa fa-angle-down"></i></button></div>
                     <div class="content">
                       <p>
                         <div>
@@ -143,10 +144,10 @@
                         </div>
                       </p>
                     </div></div></li>
-                  <li class=""><div>
+                  <li class=""><div><div class="listHead">
                       <span>First meeting with Obama.. 03-05-2018</span>
-                      <button class="danger"><i class="fa fa-trash"></i>&nbsp;Delete</button>
-                      <button class="collapsible"><i class="fa fa-angle-down"></i></button>
+                      <button class="danger del"><i class="fa fa-trash"></i>&nbsp;Delete</button>
+                      <button class="collapsible toggle"><i class="fa fa-angle-down"></i></button></div>
                     <div class="content">
                       <p>
                         <div id="read">
@@ -162,10 +163,10 @@
                         </div>
                       </p>
                     </div></div></li>
-                  <li class=""><div>
+                  <li class=""><div><div class="listHead">
                       <span>Broke up with Verneza.. 03-04-2018</span>
-                      <button class="danger"><i class="fa fa-trash"></i>&nbsp;Delete</button>
-                      <button class="collapsible"><i class="fa fa-angle-down"></i></button>
+                      <button class="danger del"><i class="fa fa-trash"></i>&nbsp;Delete</button>
+                      <button class="collapsible toggle"><i class="fa fa-angle-down"></i></button></div>
                     <div class="content">
                       <p>
                         <div>
@@ -192,13 +193,13 @@
                   </div>
                   <img src="images/avatar.jpg" alt="Eneh James" class="avatar center">
                   <div>
-                    <form enctype="multipart/form-data" onsubmit="return false;">
+                    <form id="picForm" enctype="multipart/form-data" onsubmit="return false;">
                       <center><div class="space-up">
                     <div class="tooltip">
-                        <input type="file" id="profilePic" name="profilePic" required/>
+                        <input type="file" id="profilePic" name="profilePic" accept="image/png, image/jpeg, image/gif" required/>
                         <span class="tooltiptext">Upload image of you (.jpg, .png, .gif)</span>
                     </div>
-                        <input type="submit" value="Save" id="savePic" name="savePic"/>
+                        <button type="submit" id="savePic" class="submit"><i class="fa fa-save"></i>&nbsp;Save</button>
                       </div></center>
                       <hr/>
                     </form>
@@ -209,7 +210,9 @@
                         </label></div>
                 </div>
       </main>
-      <script type="text/javascript" src="js/interactive.js" async></script>
+      <script type="text/javascript" src="js/interactive.js"></script>
+      <script type="text/javascript" src="js/jquery.js"></script>
+      <script type="text/javascript" src="js/diary-functions.js"></script>
    </body>
    
 </html>
