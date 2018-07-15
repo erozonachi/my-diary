@@ -9,7 +9,7 @@
         <title>MyDiary</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel = "stylesheet" type = "text/css" href = "user/css/style.css">
-        <script type="type/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js" async></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
    </head>
    
    <body>
@@ -31,7 +31,8 @@
           <section>
               <form id="signUpForm" onsubmit="return false;">
               <div class="form-container">
-                    <h1>Sign Up</h1><br/>
+                    <h1>Sign Up</h1>
+                    <div id="toast"></div>
                         <label for="name"><b>Choose a Username</b></label>
                         <div class="tooltip">
                             <input type="text" placeholder="Choose a Username" name="username" id="username" required>
@@ -40,34 +41,35 @@
 
                         <label for="email"><b>Your Email</b></label>
                         <div class="tooltip">
-                            <input type="email" placeholder="Enter Your Email" name="email" required>
+                            <input type="email" placeholder="Enter Your Email" id="email" name="email" required>
                             <span class="tooltiptext">Provide active an email address</span>
                         </div>
                     
                         <label for="psw"><b>Choose Password</b></label>
                         <div class="tooltip">
-                            <input type="password" placeholder="Choose Password" name="password" required>
+                            <input type="password" placeholder="Choose Password" id="password" name="password" required>
                             <span class="tooltiptext">Min character length of 10. Digit and letter mix</span>
                         </div>
                     
                         <label for="psw"><b>Confirm Password</b></label>
                         <div class="tooltip">
-                            <input type="password" placeholder="Confirm Password" name="confirm" required>
+                            <input type="password" placeholder="Confirm Password" id="confirm" name="confirm" required>
                             <span class="tooltiptext">Re-enter above password</span>
                         </div>
                     
                         <label class="check-container">By clicking "Sign Up", you agree to our service terms &amp; conditions.
-                            <input type="checkbox" name="terms" id="terms" value="">
+                            <input type="checkbox" name="terms" id="terms" value="" required>
                             <span class="checkmark"></span>
                         </label>
                     
-                        <button type="submit" class="big-btn">Sign Up</button>
+                        <button type="submit" id="btnSignUp" class="big-btn">Sign Up</button>
                         <div><strong>Have an account? <a href="signin.html">Sign in</a></strong></div>
                 </div>
                 </form>
           </section>
       </main>
-      <script type="text/javascript" src="user/js/interactive.js" async></script>
+      <script type="text/javascript" src="user/js/interactive.js"></script>
+      <script type="text/javascript" src="user/js/jquery.js"></script>
    </body>
    
 </html>

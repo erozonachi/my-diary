@@ -90,8 +90,6 @@ a {
 
 #active {
     color: #cc9933;
-    /* text-decoration: underline;
-    background-color: #000; */
 }
 
 .nav .icon {
@@ -427,12 +425,18 @@ ul {
       margin: 0;
       width: 100%;
   }
-  li div span {
-      float: left;
-      margin: 0 10px;
-      font-size: 2.5vw;
+  li div .listHead {
+      clear: left;
+      min-width: 100%;
+      max-width: 100%;
   }
-  li div button {
+  li div .listHead span {
+      float: left;
+      margin: 0 5px;
+      font-size: 14pt;
+      max-width: 60%;
+  }
+  li div .listHead button {
       float: right;
       cursor: pointer;
       margin: 0 5px;
@@ -440,6 +444,12 @@ ul {
       border: none;
       border-radius: 5px;
       outline: none;
+  }
+  li div .listHead del {
+      max-width: 25%;
+  }
+  li div .listHead toggle {
+      max-width: 15%;
   }
   
   .danger {
@@ -480,7 +490,8 @@ ul {
     font-size: 16px;
     box-sizing: border-box;
     border: 2px solid #ccc;
-    border-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
     outline: none;
     background-color: white;
     background-position: 10px 10px; 
@@ -503,8 +514,8 @@ ul {
   }
   .btn {
     display: inline-block;
-    padding: 12px 25px;
-    max-width: 90%;
+    padding: 13px 25px;
+    max-width: 100%;
     color: #000;
     text-align: center;
     font-size: 16px;
@@ -513,18 +524,19 @@ ul {
     border: none;
     box-sizing: border-box;
     outline: none;
-    border-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-top-right-radius: 4px;
   }
   .space-left {
     margin-left: 10%;
   }
   .search-container {
-    max-width: 75%;
+    max-width: 80%;
   }
-  .one-in-four {
+  .one-in-five {
     clear: none;
     float: left;
-    max-width: 25%;
+    max-width: 20%;
   }
   
   .addBtn:hover {
@@ -537,7 +549,7 @@ ul {
   }
   
   .content {
-      padding: 0 18px;
+      padding: 0 2px;
       max-height: 0;
       overflow: hidden;
       transition: max-height 0.2s ease-out;
@@ -564,18 +576,16 @@ ul {
   
   textarea {
       width: 100%;
-      padding: 12px;
+      padding: 12px 20px;
       border: 1px solid #ccc;
       border-radius: 4px;
       box-sizing: border-box;
-      margin-top: 6px;
-      margin-bottom: 16px;
   }
   textarea {
       height: 100px;
   }
   
-  input[type=submit] {
+  .submit {
       background-color: #4CAF50;
       color: white;
       max-width: 150px;
@@ -584,95 +594,28 @@ ul {
       border-radius: 4px;
       cursor: pointer;
   }
-  
-  input[type=submit]:hover {
-      background-color: #45a049;
-  }
   .space-up {
     margin-top: 20px;
   }
 
-@media screen and (max-width: 1536px) {
-    .desktop-content {
-        left: 30%;
-        transform: translate(-50%, -50%);
-    }
-      
-      .container {
-        right: 10%;
-      }
+#toast {
+    visibility: hidden;
+    max-width: 350px;
+    min-width: 350px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 16px;
+    font-size: 17px;
+    margin-bottom: 5px;
 }
-@media screen and (max-width: 1112px) {
-    .desktop-content {
-        left: 10%;
-        transform: translate(-35%, -35%);
-        max-width: 300px;
-    }
-      
-      .container {
-        right: 3%;
-        max-width: 400px;
-      }
+
+#toast.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
 }
-@media screen and (max-width: 965px) {
-    .desktop-content {
-        display: none;
-    } 
-    .container {
-        display: none;
-    }
-    .mobile-content {
-        display: inline-block;
-        margin-top: 100px;
-    }
-    .tooltiptext {
-        display: none;
-    }
-}
-@media screen and (max-width: 600px) {
-    .nav a:not(:first-child) {display: none;}
-    .nav a.icon {
-      float: right;
-      display: block;
-    }
-  }
-  
-  @media screen and (max-width: 600px) {
-    .nav.responsive {position: relative;}
-    .nav.responsive a.icon {
-      position: absolute;
-      right: 0;
-      top: 0;
-    }
-    .nav.responsive a {
-      float: none;
-      display: block;
-      text-align: left;
-      padding: 20px 16px;
-    }
-      
-    .container, .desktop-content {
-        display: none;
-    }
-
-    .mobile-content {
-        display: inline-block;
-        margin-top: 100px;
-    }
-
-    .form-container {
-        width: 90%;
-        margin: auto 5%;
-        padding: 5px;
-        box-shadow: none;
-    }
-
-    #signin, 
-    #reset, #allEntries, #userProfile {
-        top: 225px;
-    }
-
-  }
 
 @-webkit-keyframes aboutMove {
     from {left: 0px;}
@@ -808,3 +751,120 @@ ul {
 	-o-animation-name: scaleIn;
 	animation-name: scaleIn;
 }
+
+@-webkit-keyframes fadein {
+    from {opacity: 0;} 
+    to {opacity: 1;}
+}
+
+@keyframes fadein {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+    from {opacity: 1;} 
+    to {opacity: 0;}
+}
+
+@keyframes fadeout {
+    from {opacity: 1;}
+    to {opacity: 0;}
+}
+
+@media screen and (max-width: 1536px) {
+    .desktop-content {
+        left: 30%;
+        transform: translate(-50%, -50%);
+    }
+      
+      .container {
+        right: 10%;
+      }
+}
+@media screen and (max-width: 1112px) {
+    .desktop-content {
+        left: 10%;
+        transform: translate(-35%, -35%);
+        max-width: 300px;
+    }
+      
+    .container {
+    right: 3%;
+    max-width: 400px;
+    }
+
+    .tooltiptext {
+        display: none;
+    }
+
+}
+@media screen and (max-width: 965px) {
+    .desktop-content {
+        display: none;
+    } 
+    .container {
+        display: none;
+    }
+    .mobile-content {
+        display: inline-block;
+        margin-top: 100px;
+    }
+    .tooltiptext {
+        display: none;
+    }
+}
+@media screen and (max-width: 600px) {
+    .nav a:not(:first-child) {display: none;}
+    .nav a.icon {
+      float: right;
+      display: block;
+    }
+  }
+  
+  @media screen and (max-width: 600px) {
+    .nav.responsive {position: relative;}
+    .nav.responsive a.icon {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+    .nav.responsive a {
+      float: none;
+      display: block;
+      text-align: left;
+      padding: 20px 16px;
+    }
+      
+    .container, .desktop-content {
+        display: none;
+    }
+
+    .mobile-content {
+        display: inline-block;
+        margin-top: 100px;
+    }
+
+    .form-container {
+        width: 90%;
+        margin: auto 5%;
+        padding: 5px;
+        box-shadow: none;
+    }
+
+    #signin, 
+    #reset, #allEntries, #userProfile {
+        top: 225px;
+    }
+
+    #toast {
+        visibility: hidden;
+        max-width: 100%;
+        min-width: 100%;
+    }
+
+    li div .listHead span {
+        font-size: 10pt;
+    }
+
+  }
