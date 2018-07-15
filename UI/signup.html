@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang = "en">
+   
+   <head>
+        <meta charset = "UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+        <link rel="shortcut icon" href="user/images/logo.png" type="image/x-icon">
+        <meta name="description" content="MyDiary Application">
+        <title>MyDiary</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel = "stylesheet" type = "text/css" href = "user/css/style.css">
+        <script type="type/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js" async></script>
+   </head>
+   
+   <body>
+      <main>
+          <header>
+                <div class="nav" id="nav">
+                    <a href="index.html"><img src="user/images/logo.png" id="app-logo"/>
+                    <span id="app-name">MyDiary</span></a>          
+                    <a href="index.html">Home</a>
+                    <a href="#" id="active">Sign Up</a>
+                    <a href="signin.html">Sign In</a>
+                    <a href="javascript:void(0);" class="icon" onclick="toggleMenu(this)">
+                        <div class="bar1"></div>
+                        <div class="bar2"></div>
+                        <div class="bar3"></div>
+                    </a>
+                </div>
+          </header>
+          <section>
+              <form id="signUpForm" onsubmit="return false;">
+              <div class="form-container">
+                    <h1>Sign Up</h1><br/>
+                        <label for="name"><b>Choose a Username</b></label>
+                        <div class="tooltip">
+                            <input type="text" placeholder="Choose a Username" name="username" id="username" required>
+                            <span class="tooltiptext">Username must begin with a letter</span>
+                        </div>
+
+                        <label for="email"><b>Your Email</b></label>
+                        <div class="tooltip">
+                            <input type="email" placeholder="Enter Your Email" name="email" required>
+                            <span class="tooltiptext">Provide active an email address</span>
+                        </div>
+                    
+                        <label for="psw"><b>Choose Password</b></label>
+                        <div class="tooltip">
+                            <input type="password" placeholder="Choose Password" name="password" required>
+                            <span class="tooltiptext">Min character length of 10. Digit and letter mix</span>
+                        </div>
+                    
+                        <label for="psw"><b>Confirm Password</b></label>
+                        <div class="tooltip">
+                            <input type="password" placeholder="Confirm Password" name="confirm" required>
+                            <span class="tooltiptext">Re-enter above password</span>
+                        </div>
+                    
+                        <label class="check-container">By clicking "Sign Up", you agree to our service terms &amp; conditions.
+                            <input type="checkbox" name="terms" id="terms" value="">
+                            <span class="checkmark"></span>
+                        </label>
+                    
+                        <button type="submit" class="big-btn">Sign Up</button>
+                        <div><strong>Have an account? <a href="signin.html">Sign in</a></strong></div>
+                </div>
+                </form>
+          </section>
+      </main>
+      <script type="text/javascript" src="user/js/interactive.js" async></script>
+   </body>
+   
+</html>

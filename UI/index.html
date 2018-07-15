@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang = "en">
+   
+   <head>
+        <meta charset = "UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+        <link rel="shortcut icon" href="user/images/logo.png" type="image/x-icon">
+        <meta name="description" content="MyDiary Application">
+        <title>MyDiary</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel = "stylesheet" type = "text/css" href = "user/css/style.css">
+   </head>
+   
+   <body>
+      <main>
+          <header>
+            <div class="nav" id="nav">
+                <a href="javascript:void(0);"><img src="user/images/logo.png" id="app-logo"/>
+                <span id="app-name">MyDiary</span></a>          
+                <a href="javascript:void(0);" id="active">Home</a>
+                <a href="signup.html">Sign Up</a>
+                <a href="signin.html">Sign In</a>
+                <a href="user/dashboard.html">Dashboard</a>
+                <a href="javascript:void(0);" class="icon" onclick="toggleMenu(this)">
+                    <!--i class="fa fa-bars"></i-->
+                    <div class="bar1"></div>
+                    <div class="bar2"></div>
+                    <div class="bar3"></div>
+                </a>
+            </div>
+          </header>
+          <section class="bg-img">
+                <article class="mobile-content">
+                    <h1>My Diary App&trade;</h1>
+                    <p>Keep your Feelings and Thoughts alive, by saving them on "My Diary App". Only you have access to your 
+                        saved entries in your diary, you can delete or modify your diary entries and the App also has 
+                        a quick search feature that allows quick access to entry or group of entries, you want to work on at the 
+                        moment!<br/><br/><h3>It's Personally crafted, just for you... <br/><br/>Don't have an account? <strong><a href="signup.html">Sign up</a></strong></h3>
+                    </p>
+                </article>
+                <article class="desktop-content">
+                    <h1>My Diary App&trade;</h1>
+                    <p>Keep your Feelings and Thoughts alive, by saving them on "My Diary App". Only you have access to your 
+                            saved entries in your diary, you can delete or modify your diary entries and the App also has 
+                            a quick search feature that allows quick access to entry or group of entries, you want to work on at the 
+                            moment!<br/><br/><h3>It's Personally crafted just for you...</h3>
+                    </p>
+                </article>
+                <form action="" onsubmit="return false;">
+                <div class="container">
+                        <h1>Sign Up</h1><br/>
+                        <label for="name"><b>Choose a Username</b></label>
+                        <div class="tooltip">
+                            <input type="text" placeholder="Choose a Username" name="username" id="username" required>
+                            <span class="tooltiptext">Username must begin with a letter</span>
+                        </div>
+
+                        <label for="email"><b>Your Email</b></label>
+                        <div class="tooltip">
+                            <input type="email" placeholder="Enter Your Email" name="email" required>
+                            <span class="tooltiptext">Provide active an email address</span>
+                        </div>
+                    
+                        <label for="psw"><b>Choose Password</b></label>
+                        <div class="tooltip">
+                            <input type="password" placeholder="Choose Password" name="password" required>
+                            <span class="tooltiptext">Min character length of 10. Digit and letter mix</span>
+                        </div>
+                    
+                        <label for="psw"><b>Confirm Password</b></label>
+                        <div class="tooltip">
+                            <input type="password" placeholder="Confirm Password" name="confirm" required>
+                            <span class="tooltiptext">Re-enter above password</span>
+                        </div>
+                    
+                        <label class="check-container">By clicking "Sign Up", you agree to our service terms &amp; conditions.
+                            <input type="checkbox" name="terms" id="terms" value="">
+                            <span class="checkmark"></span>
+                        </label>
+                    
+                        <button type="submit" class="big-btn">Sign Up</button>
+                        <div><strong>Have an account? <a href="signin.html">Sign in</a></strong></div>
+                </div>
+            </form>
+          </section>
+          <section><article><img id="andela-logo" src="user/images/andela.png"/><span class="heavy">Developer Challenge</span></article></section>
+          <section><article id="footer">All rights reserved, <strong>MyDiary</strong> &copy; 2018</article></section>
+      </main>
+      <script type="text/javascript" src="user/js/interactive.js" async></script>
+   </body>
+   
+</html>
