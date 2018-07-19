@@ -1,7 +1,7 @@
 /**
 * @author Eneh, James Erozonachi
 *
-* @description entry-point of MyDiary Applicaction
+* @description entry-point (Server) of MyDiary Applicaction
 *
 * */
 import express from 'express';

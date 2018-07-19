@@ -6,6 +6,7 @@
 * */
 import assert from 'assert';
 import newEntry from '../api/core/new-entry';
+import fetchAllEntries from '../api/core/all-entries';
 
 // test data for add entry module
 const testCase = [
@@ -66,6 +67,13 @@ const testCase = [
     },
   },
 ];
+const getAllExpectedResult = {
+  statusCode: 200,
+  data: JSON.stringify({
+    status: 'succeeded',
+    data: [{}],
+  }),
+};
 describe('Entry Specification', () => {
   // add entry module test
   describe('#newEntry()', () => {
@@ -73,6 +81,12 @@ describe('Entry Specification', () => {
       it(`should return ${entry.expectedResult}`, () => {
         assert.deepStrictEqual(newEntry(entry.testData, []), entry.expectedResult);
       });
+    });
+  });
+  // fetchAllEntries module test
+  describe('#fetchAllEntries()', () => {
+    it(`should return ${getAllExpectedResult}`, () => {
+      assert.deepStrictEqual(fetchAllEntries([{}]), getAllExpectedResult);
     });
   });
 });
