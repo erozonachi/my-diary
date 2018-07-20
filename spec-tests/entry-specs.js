@@ -7,9 +7,10 @@
 import assert from 'assert';
 import newEntry from '../api/core/new-entry';
 import fetchAllEntries from '../api/core/all-entries';
+import fetchSingleEntry from '../api/core/single-entry';
 
-// test data for add entry module
-const testCase = [
+// test data and expected result for add entry module
+const testCase1 = [
   {
     testData: {
       title: '',
@@ -67,6 +68,95 @@ const testCase = [
     },
   },
 ];
+// test data and expected result for fetch single entry module
+const testCase2 = [
+  {
+    testData: null,
+    store: [{
+      title: 'some title',
+      description: 'some description',
+      conclusion: 'some conclusion',
+      createdAt: '2018/07/20 01:25:07',
+    }],
+    expectedResult: {
+      statusCode: 400,
+      data: JSON.stringify({
+        status: 'failed',
+        data: { message: 'Entry ID is required' },
+      }),
+    },
+  },
+  {
+    testData: 'rtrtykj',
+    store: [{
+      title: 'some title',
+      description: 'some description',
+      conclusion: 'some conclusion',
+      createdAt: '2018/07/20 01:25:07',
+    }],
+    expectedResult: {
+      statusCode: 400,
+      data: JSON.stringify({
+        status: 'failed',
+        data: { message: 'Invalid entry ID' },
+      }),
+    },
+  },
+  {
+    testData: -1,
+    store: [{
+      title: 'some title',
+      description: 'some description',
+      conclusion: 'some conclusion',
+      createdAt: '2018/07/20 01:25:07',
+    }],
+    expectedResult: {
+      statusCode: 400,
+      data: JSON.stringify({
+        status: 'failed',
+        data: { message: 'Entry ID cannot be a negative number' },
+      }),
+    },
+  },
+  {
+    testData: 1,
+    store: [{
+      title: 'some title',
+      description: 'some description',
+      conclusion: 'some conclusion',
+      createdAt: '2018/07/20 01:25:07',
+    }],
+    expectedResult: {
+      statusCode: 404,
+      data: JSON.stringify({
+        status: 'failed',
+        data: { message: 'ID out of range! No entry found for the specified Id' },
+      }),
+    },
+  },
+  {
+    testData: 0,
+    store: [{
+      title: 'some title',
+      description: 'some description',
+      conclusion: 'some conclusion',
+      createdAt: '2018/07/20 01:25:07',
+    }],
+    expectedResult: {
+      statusCode: 200,
+      data: JSON.stringify({
+        status: 'succeeded',
+        data: {
+          title: 'some title',
+          description: 'some description',
+          conclusion: 'some conclusion',
+          createdAt: '2018/07/20 01:25:07',
+        },
+      }),
+    },
+  },
+];
+// Expected result for fetch all entries module 
 const getAllExpectedResult = {
   statusCode: 200,
   data: JSON.stringify({
@@ -77,7 +167,7 @@ const getAllExpectedResult = {
 describe('Entry Specification', () => {
   // add entry module test
   describe('#newEntry()', () => {
-    testCase.forEach((entry) => {
+    testCase1.forEach((entry) => {
       it(`should return ${entry.expectedResult}`, () => {
         assert.deepStrictEqual(newEntry(entry.testData, []), entry.expectedResult);
       });
@@ -87,6 +177,14 @@ describe('Entry Specification', () => {
   describe('#fetchAllEntries()', () => {
     it(`should return ${getAllExpectedResult}`, () => {
       assert.deepStrictEqual(fetchAllEntries([{}]), getAllExpectedResult);
+    });
+  });
+  // fetchSingleEntry module test
+  describe('#fetchSingleEntry()', () => {
+    testCase2.forEach((entry) => {
+      it(`should return ${entry.expectedResult}`, () => {
+        assert.deepStrictEqual(fetchSingleEntry(entry.testData, entry.store), entry.expectedResult);
+      });
     });
   });
 });

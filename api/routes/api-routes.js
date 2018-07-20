@@ -7,15 +7,22 @@
 * */
 import newEntry from '../core/new-entry';
 import getAllEntries from '../core/all-entries';
+import getSingleEntry from '../core/single-entry';
 
 export default function apiRoutes(app, diary) {
-  const urlPrefix = '/api/v1/';
-  app.get(`${urlPrefix}entries`, (req, res) => {
-    // GET /api/v1/entries
+  const route = '/api/v1/entries';
+  // GET /api/v1/entries
+  app.get(`${route}`, (req, res) => {
     const result = getAllEntries(diary);
     res.status(result.statusCode).send(result.data);
   });
-  app.post(`${urlPrefix}entries`, (req, res) => {
+  // GET /api/v1/entries/:entryId
+  app.get(`${route}/:entryId`, (req, res) => {
+    const entryId = req.params.entryId;
+    const result = getSingleEntry(entryId, diary);
+    res.status(result.statusCode).send(result.data);
+  });
+  app.post(`${route}`, (req, res) => {
     // POST /api/v1/entries
     const result = newEntry(req.body, diary);
     res.status(result.statusCode).send(result.data);
