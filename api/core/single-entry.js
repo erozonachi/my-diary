@@ -57,7 +57,6 @@ export default function fetchSingleEntry(id, diary) {
           message: 'Unable to process request at the moment',
         },
       };
-      console.log(error.message);
       returnResponse = formatResponse(result);
     }
   }

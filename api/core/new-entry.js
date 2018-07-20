@@ -55,7 +55,6 @@ export default function newEntry(entryInfo, diary) {
           message: 'Unable to process request at the moment',
         },
       };
-      console.log(error.message);
       returnValue = formatResponse(result);
     }
   }
