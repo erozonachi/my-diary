@@ -1,7 +1,7 @@
 /**
 * @author Eneh, James Erozonachi
 *
-* @description entry operations pecification
+* @description entry operations specification
 *
 * */
 import assert from 'assert';

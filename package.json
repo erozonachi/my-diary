@@ -3,10 +3,14 @@
   "version": "1.0.0",
   "description": "A repo for an online journal where users can pen down their thoughts and feelings.",
   "main": "index.js",
+  "engines": {
+    "node": "6.9.0"
+  },
   "scripts": {
     "test": "mocha --compilers js:babel-core/register spec-tests/entry-specs.js",
-    "start": "babel-node server.js --presets es2015",
-    "dev": "nodemon server.js"
+    "server": "nodemon server.js --exec babel-node",
+    "heroku-postbuild": "npm install",
+    "start": "babel-node server.js"
   },
   "repository": {
     "type": "git",
@@ -26,6 +30,7 @@
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.6",
+    "babel-preset-env": "^1.7.0",
     "babel-preset-es2015": "^6.24.1",
     "eslint": "^5.1.0",
     "eslint-config-airbnb": "^17.0.0",
