@@ -117,7 +117,7 @@ $( document ).ready ( function () {
 
 function toggleMenu(X) {
   X.classList.toggle("change");
-  var x = document.getElementById("nav");
+  const x = document.getElementById("nav");
   if (x.className === "nav") {
       x.className += " responsive";
   } else {

@@ -24,7 +24,7 @@ function resetEntryForm () {
   $("#submit").html('<i class="fa fa-save"></i>&nbsp;Add Entry');
 }
 
-var entryList = [
+const entryList = [
   {
       "id": 2,
       "title": "My Paris Trip",
@@ -42,26 +42,26 @@ var entryList = [
 ];
 function renderEntryList (list) {
   list.forEach(element => {
-      var span = document.createElement("span");
-      var txt = document.createTextNode(element["title"]+".. "+element["date"]);
+      const span = document.createElement("span");
+      let txt = document.createTextNode(element["title"]+".. "+element["date"]);
       span.appendChild(txt);
 
-      var i1 = document.createElement("i");
+      const i1 = document.createElement("i");
       i1.setAttribute("class", "fa fa-trash");
       txt = document.createTextNode(" Delete");
       i1.appendChild(txt);
-      var btn1 = document.createElement("button");
+      const btn1 = document.createElement("button");
       btn1.setAttribute("class", "danger del");
       btn1.appendChild(i1);
       
-      var i2 = document.createElement("i");
+      const i2 = document.createElement("i");
       i2.setAttribute("class", "fa fa-angle-down");
-      var btn2 = document.createElement("button");
+      const btn2 = document.createElement("button");
       btn2.setAttribute("class", "collapsible toggle");
       btn2.appendChild(i2);
       
-      var readDiv = document.createElement("div");
-      var br = document.createElement("br");
+      const readDiv = document.createElement("div");
+      let br = document.createElement("br");
 
       const strong1 = document.createElement("strong");
       txt = document.createTextNode("Title: ");
@@ -137,15 +137,15 @@ function renderEntryList (list) {
 
 renderEntryList (entryList);
 
-var coll = document.getElementsByClassName("collapsible");
-var j;
+const coll = document.getElementsByClassName("collapsible");
+let j = 0;
 
-for (j = 0; j < coll.length; j++) {
+for (j; j < coll.length; j++) {
 coll[j].addEventListener("click", function() {
   resetEntryForm ();
   this.classList.toggle("active");
-  var parent = this.parentNode;
-  var content = parent.nextElementSibling;
+  const parent = this.parentNode;
+  const content = parent.nextElementSibling;
   const toggleIcon = this.firstElementChild;
   if (content.style.maxHeight){
     content.style.maxHeight = null;
