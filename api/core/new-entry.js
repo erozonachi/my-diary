@@ -4,13 +4,11 @@
 * @description A module that saves new entry object to an entry list
 *
 * */
-import validateId from './validatelib/validate-id';
 import formatResponse from './outputlib/response-format';
 
-export default function newEntry(userId, entryInfo, diary) {
+export default function newEntry(entryInfo, diary) {
   let returnValue = {};
   try {
-    validateId(userId, 'User', diary);
     if (entryInfo.title.trim() === '') {
       const error = {
         code: 400,
@@ -39,22 +37,22 @@ export default function newEntry(userId, entryInfo, diary) {
       conclusion: entryInfo.conclusion,
       createdAt,
     };
-    diary[parseInt(userId, 10)].entries.push(entry);
-    const key = diary[parseInt(userId, 10)].entries.length - 1;
-    entry.id = key;
+    diary.push(entry);
     const result = {
       code: 201,
-      data: entry,
+      data: {
+        message: 'New entry created successfully',
+      },
     };
     returnValue = formatResponse(result);
   } catch (error) {
-    if (error.code < 500) {
+    if (error.code === 400) {
       returnValue = formatResponse(error);
     } else {
       const result = {
         code: 500,
         data: {
-          message: error.message,
+          message: 'Unable to process request at the moment',
         },
       };
       returnValue = formatResponse(result);
