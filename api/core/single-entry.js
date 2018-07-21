@@ -4,42 +4,23 @@
 * @description A module that fetches a single entry from entry list
 *
 * */
+import validateId from './validatelib/validate-id';
 import formatResponse from './outputlib/response-format';
 
-export default function fetchSingleEntry(id, diary) {
+export default function fetchSingleEntry(userId, id, diary) {
   let returnResponse = {};
-  const isIdInteger = Number.isInteger(parseInt(id, 10));
   try {
-    if (id === null || id === undefined) {
-      const error = {
-        code: 400,
-        data: { message: 'Entry ID is required' },
-      };
-      throw error;
-    }
-    if (!isIdInteger) {
-      const error = {
-        code: 400,
-        data: { message: 'Invalid entry ID' },
-      };
-      throw error;
-    }
-    if (parseInt(id, 10) < 0) {
-      const error = {
-        code: 400,
-        data: { message: 'Entry ID cannot be a negative number' },
-      };
-      throw error;
-    }
-    const entry = diary[parseInt(id, 10)];
+    validateId(userId, 'User', diary);
+    validateId(id, 'Entry');
+    const entry = diary[parseInt(userId, 10)].entries[parseInt(id, 10)];
     if (entry === null || entry === undefined) {
-      const result = {
+      const error = {
         code: 404,
         data: {
-          message: 'ID out of range! No entry found for the specified Id',
+          message: 'ID out of range! No Entry found for the specified Id',
         },
       };
-      returnResponse = formatResponse(result);
+      throw error;
     } else {
       const result = {
         code: 200,
@@ -48,7 +29,7 @@ export default function fetchSingleEntry(id, diary) {
       returnResponse = formatResponse(result);
     }
   } catch (error) {
-    if (error.code === 400) {
+    if (error.code < 500) {
       returnResponse = formatResponse(error);
     } else {
       const result = {

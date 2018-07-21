@@ -4,33 +4,14 @@
 * @description A module that updates existing entry object
 *
 * */
+import validateId from './validatelib/validate-id';
 import formatResponse from './outputlib/response-format';
 
-export default function modifyEntry(id, entryInfo, diary) {
+export default function modifyEntry(userId, id, entryInfo, diary) {
   let returnValue = {};
-  const isIdInteger = Number.isInteger(parseInt(id, 10));
   try {
-    if (id === null || id === undefined) {
-      const error = {
-        code: 400,
-        data: { message: 'Entry ID is required' },
-      };
-      throw error;
-    }
-    if (!isIdInteger) {
-      const error = {
-        code: 400,
-        data: { message: 'Invalid entry ID' },
-      };
-      throw error;
-    }
-    if (parseInt(id, 10) < 0) {
-      const error = {
-        code: 400,
-        data: { message: 'Entry ID cannot be a negative number' },
-      };
-      throw error;
-    }
+    validateId(userId, 'User', diary);
+    validateId(id, 'Entry');
     if (entryInfo.title.trim() === '' || entryInfo.title === null || entryInfo.title === undefined) {
       const error = {
         code: 400,
@@ -52,12 +33,12 @@ export default function modifyEntry(id, entryInfo, diary) {
       };
       throw error;
     }
-    const entry = diary[parseInt(id, 10)];
+    const entry = diary[parseInt(userId, 10)].entries[parseInt(id, 10)];
     if (entry === null || entry === undefined) {
       const result = {
         code: 404,
         data: {
-          message: 'ID out of range! No entry found for the specified Id',
+          message: 'ID out of range! No Entry found for the specified Id',
         },
       };
       returnValue = formatResponse(result);
@@ -75,9 +56,7 @@ export default function modifyEntry(id, entryInfo, diary) {
       entry.updatedAt = updatedAt;
       const result = {
         code: 200,
-        data: {
-          message: 'Entry modified successfully',
-        },
+        data: entry,
       };
       returnValue = formatResponse(result);
     }
