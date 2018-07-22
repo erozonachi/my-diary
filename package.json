@@ -7,7 +7,8 @@
     "node": "8.9.4"
   },
   "scripts": {
-    "test": "mocha --compilers js:babel-core/register spec-tests/entry-specs.js",
+    "test": "nyc --reporter=html --reporter=text mocha --compilers js:babel-core/register spec-tests/entry-specs.js",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
     "server": "nodemon server.js --exec babel-node",
     "heroku-postbuild": "npm install",
     "start": "babel-node server.js"
@@ -40,6 +41,7 @@
     "istanbul": "^0.4.5",
     "mocha": "^5.2.0",
     "nodemon": "^1.18.3",
+    "nyc": "^12.0.2",
     "rimraf": "^2.6.2"
   }
 }
