@@ -14,7 +14,7 @@
    
    <body>
       <main>
-          <header>
+          <header id="dashboard-header">
             <div class="nav" id="nav">
                 <a href="#toEntries"><img src="../images/logo.png" id="app-logo"/>
                 <span id="app-name">MyDiary</span></a>          
@@ -31,7 +31,8 @@
           </header>
           <a class="hiddenanchor" id="toEntries"></a>
             <a class="hiddenanchor" id="toProfile"></a>
-          <div id="allEntries" class="animate form-container">
+            <div class="split right">
+          <div id="allEntries" class="animate form-container"> 
                 <div id="myEntries" class="header">
                   <h2>My Diary Entries</h2><br/>
                   <div><span onclick="" class="addBtn collapsible">Toggle Entry Form</span></div>
@@ -183,9 +184,11 @@
                       </p>
                     </div></div></li>
                 </ul></div>
-                </div>
-                <div id="userProfile" class="animate form-container">
+                </div></div>
+                <div class="split left">
+                <div id="userProfile" class="animate">
                   <div class="space-up">
+                    <center><img class="logo" src="../images/logo.png"/></center>
                     <center><h2>User Profile</h2></center>
                     <center>Welcome <strong>James</strong></center>
                     <center>Registered Email <strong>erozonachi.james@gmail.com</strong></center>
@@ -208,7 +211,7 @@
                         <input type="checkbox" name="notify" id="notify" value="">
                         <span class="checkmark"></span>
                         </label></div>
-                </div>
+                </div></div>
       </main>
       <script type="text/javascript" src="../js/interactive.js"></script>
       <script type="text/javascript" src="../js/jquery.js"></script>
