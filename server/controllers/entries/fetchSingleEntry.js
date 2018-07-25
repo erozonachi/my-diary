@@ -4,8 +4,8 @@
 * @description A module that fetches a single entry from entry list
 *
 * */
-import validateId from './validatelib/validate-id';
-import formatResponse from './outputlib/response-format';
+import validateId from '../../helpers/validatelib/validateId';
+import formatResponse from '../../helpers/outputlib/formatResponse';
 
 export default function fetchSingleEntry(userId, id, diary) {
   let returnResponse = {};

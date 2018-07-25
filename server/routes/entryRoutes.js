@@ -5,29 +5,23 @@
 * @description MyDiary Application API endpoints routes
 *
 * */
-import newUser from '../core/new-user';
-import newEntry from '../core/new-entry';
-import getAllEntries from '../core/all-entries';
-import getSingleEntry from '../core/single-entry';
-import modifyEntry from '../core/modify-entry';
+import newEntry from '../controllers/entries/newEntry';
+import fetchAllEntries from '../controllers/entries/fetchAllEntries';
+import fetchSingleEntry from '../controllers/entries/fetchSingleEntry';
+import modifyEntry from '../controllers/entries/modifyEntry';
 
-export default function apiRoutes(app, diary) {
+export default function userRoutes(app, diary) {
   const route = '/api/v1/users';
   // GET /api/v1/users/:userId/entries
   app.get(`${route}/:userId/entries`, (req, res) => {
     const { userId } = req.params;
-    const result = getAllEntries(userId, diary);
+    const result = fetchAllEntries(userId, diary);
     res.status(result.statusCode).send(result.data);
   });
   // GET /api/v1/users/:userId/entries/:entryId
   app.get(`${route}/:userId/entries/:entryId`, (req, res) => {
     const { userId, entryId } = req.params;
-    const result = getSingleEntry(userId, entryId, diary);
-    res.status(result.statusCode).send(result.data);
-  });
-  // POST /api/v1/users
-  app.post(`${route}`, (req, res) => {
-    const result = newUser(req.body, diary);
+    const result = fetchSingleEntry(userId, entryId, diary);
     res.status(result.statusCode).send(result.data);
   });
   // POST /api/v1/users/:userId/entries

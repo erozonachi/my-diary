@@ -6,8 +6,8 @@
 * */
 import express from 'express';
 import bodyParser from 'body-parser';
-import routes from './api/routes';
-import diary from './datastore/data';
+import routes from './routes/routes';
+import diary from './models/diary';
 
 const app = express();
 

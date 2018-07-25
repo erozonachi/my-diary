@@ -4,7 +4,7 @@
 * @description A module that saves new user object to a list of users
 *
 * */
-import formatResponse from './outputlib/response-format';
+import formatResponse from '../../helpers/outputlib/formatResponse';
 
 export default function newUser(user, diary) {
   let returnValue = {};

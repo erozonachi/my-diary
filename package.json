@@ -7,11 +7,11 @@
     "node": "8.9.4"
   },
   "scripts": {
-    "test": "nyc --reporter=html --reporter=text --reporter=lcov mocha --compilers js:babel-core/register spec-tests/entry-specs.js",
+    "test": "nyc --reporter=html --reporter=text --reporter=lcov mocha --compilers js:babel-core/register server/tests/*.test.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "server": "nodemon server.js --exec babel-node",
+    "server": "nodemon server/index.js --exec babel-node",
     "heroku-postbuild": "npm install",
-    "start": "babel-node server.js"
+    "start": "babel-node server/index.js"
   },
   "repository": {
     "type": "git",

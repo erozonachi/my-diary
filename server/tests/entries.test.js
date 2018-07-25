@@ -5,10 +5,10 @@
 *
 * */
 import assert from 'assert';
-import newEntry from '../api/core/new-entry';
-import fetchAllEntries from '../api/core/all-entries';
-import fetchSingleEntry from '../api/core/single-entry';
-import modifyEntry from '../api/core/modify-entry';
+import newEntry from '../controllers/entries/newEntry';
+import fetchAllEntries from '../controllers/entries/fetchAllEntries';
+import fetchSingleEntry from '../controllers/entries/fetchSingleEntry';
+import modifyEntry from '../controllers/entries/modifyEntry';
 
 // test data and expected result for add entry module
 const testCase1 = [

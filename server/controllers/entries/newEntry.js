@@ -4,8 +4,8 @@
 * @description A module that saves new entry object to an entry list
 *
 * */
-import validateId from './validatelib/validate-id';
-import formatResponse from './outputlib/response-format';
+import validateId from '../../helpers/validatelib/validateId';
+import formatResponse from '../../helpers/outputlib/formatResponse';
 
 export default function newEntry(userId, entryInfo, diary) {
   let returnValue = {};

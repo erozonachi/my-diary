@@ -4,8 +4,8 @@
 * @description A module that updates existing entry object
 *
 * */
-import validateId from './validatelib/validate-id';
-import formatResponse from './outputlib/response-format';
+import validateId from '../../helpers/validatelib/validateId';
+import formatResponse from '../../helpers/outputlib/formatResponse';
 
 export default function modifyEntry(userId, id, entryInfo, diary) {
   let returnValue = {};

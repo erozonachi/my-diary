@@ -64,7 +64,7 @@ $( document ).ready ( function () {
     $("#btnSignIn").html('<i class="fa fa-spinner fa-spin"></i> Authenticating');
     //http request
     //demo
-    setTimeout(function(){ $("#btnSignIn").html('<i class="fa fa-lock"></i> Sign In'); window.location.replace("user/dashboard.html") }, 5000);
+    setTimeout(function(){ $("#btnSignIn").html('<i class="fa fa-lock"></i> Sign In'); window.location.replace("dashboard.html") }, 5000);
 
   });
 
