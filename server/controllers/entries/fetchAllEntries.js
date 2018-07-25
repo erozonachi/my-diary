@@ -4,14 +4,16 @@
 * @description A module that fetches all entries in entry list
 *
 * */
-import formatResponse from './outputlib/response-format';
+import validateId from '../../helpers/validatelib/validateId';
+import formatResponse from '../../helpers/outputlib/formatResponse';
 
-export default function fetchAllEntries(diary) {
+export default function fetchAllEntries(userId, diary) {
   let returnResponse = {};
   try {
+    validateId(userId, 'User', diary);
     const result = {
       code: 200,
-      data: diary,
+      data: diary[parseInt(userId, 10)].entries,
     };
     returnResponse = formatResponse(result);
   } catch (error) {
