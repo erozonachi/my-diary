@@ -144,7 +144,7 @@ a {
 .mobile-content {
     clear: left;
     display: none;
-    margin: 10px 2.5%;
+    margin: 5px 2.5%;
     width: 95%;
     padding: 10px;
     background: rgba(0, 0, 0, 0.5);
@@ -261,26 +261,6 @@ button:hover {
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
 }
-  #andela-logo {
-      clear: left;
-      display: block;
-      margin-top: 10px;
-      margin-left: auto;
-      margin-right: auto;
-      width: 50%;
-      padding: auto 15%;
-  }
-  .heavy {
-      clear: left;
-      display: block;
-      font-style: italic;
-      font-weight: bolder;
-      font-size: 250%;
-      margin-top: 10px;
-      margin-bottom: 20px;
-      width: inherit;
-      text-align: center;
-  }
   #footer {
       background: #333;
       padding: 25px;
@@ -802,13 +782,20 @@ ul {
 @media screen and (max-width: 965px) {
     .desktop-content {
         display: none;
-    } 
-    .container {
-        display: none;
     }
     .mobile-content {
         display: inline-block;
-        margin-top: 100px;
+        margin-top: 50px;
+    }
+    .container {
+        clear: left;
+        float: left;
+        position: relative;
+        right: 0;
+        max-width: 80%;
+        margin: 10px 10%;
+        padding: 16px;
+        background-color: #fff;
     }
     .tooltiptext {
         display: none;
@@ -836,13 +823,24 @@ ul {
       padding: 20px 16px;
     }
       
-    .container, .desktop-content {
+    .desktop-content {
         display: none;
     }
 
     .mobile-content {
         display: inline-block;
-        margin-top: 100px;
+        margin-top: 10px;
+    }
+
+    .container {
+        clear: left;
+        float: left;
+        position: relative;
+        right: 0;
+        max-width: 95%;
+        margin: 10px 2.5%;
+        padding: 5px;
+        background-color: #fff;
     }
 
     .form-container {
