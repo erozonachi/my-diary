@@ -8,9 +8,9 @@ import userRoutes from './userRoutes';
 import entryRoutes from './entryRoutes';
 
 // const apiRoutes = ApiRoutes();
-export default function routes(app, db) {
+export default function routes(app, validate) {
   // routes to user resources
-  userRoutes(app, db);
+  userRoutes(app, validate);
   // routes to entry resources
-  entryRoutes(app, db);
+  entryRoutes(app, validate);
 }

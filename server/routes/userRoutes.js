@@ -5,13 +5,11 @@
 * @description MyDiary Application API endpoints routes
 *
 * */
-import newUser from '../controllers/users/newUser';
+import * as Constants from '../helpers/Constants';
+import UserController from '../controllers/UserController';
+import UserValidation from '../helpers/validatelib/UserValidation';
 
-export default function userRoutes(app, diary) {
-  const route = '/api/v1/users';
+export default function userRoutes(app, validate) {
   // POST /api/v1/users
-  app.post(`${route}`, (req, res) => {
-    const result = newUser(req.body, diary);
-    res.status(result.statusCode).send(result.data);
-  });
+  app.post(Constants.apiBaseURL, validate(UserValidation.create), UserController.create);
 }
