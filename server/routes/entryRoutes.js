@@ -5,35 +5,17 @@
 * @description MyDiary Application API endpoints routes
 *
 * */
-import newEntry from '../controllers/entries/newEntry';
-import fetchAllEntries from '../controllers/entries/fetchAllEntries';
-import fetchSingleEntry from '../controllers/entries/fetchSingleEntry';
-import modifyEntry from '../controllers/entries/modifyEntry';
+import * as Constants from '../helpers/Constants';
+import EntryValidation from '../helpers/validatelib/EntryValidation';
+import EntryController from '../controllers/EntryController';
 
-export default function userRoutes(app, diary) {
-  const route = '/api/v1/users';
+export default function entryRoutes(app, validate) {
   // GET /api/v1/users/:userId/entries
-  app.get(`${route}/:userId/entries`, (req, res) => {
-    const { userId } = req.params;
-    const result = fetchAllEntries(userId, diary);
-    res.status(result.statusCode).send(result.data);
-  });
+  app.get(`${Constants.apiBaseURL}/:userId/entries`, validate(EntryValidation.readAll), EntryController.readAll);
   // GET /api/v1/users/:userId/entries/:entryId
-  app.get(`${route}/:userId/entries/:entryId`, (req, res) => {
-    const { userId, entryId } = req.params;
-    const result = fetchSingleEntry(userId, entryId, diary);
-    res.status(result.statusCode).send(result.data);
-  });
+  app.get(`${Constants.apiBaseURL}/:userId/entries/:entryId`, validate(EntryValidation.read), EntryController.read);
   // POST /api/v1/users/:userId/entries
-  app.post(`${route}/:userId/entries`, (req, res) => {
-    const { userId } = req.params;
-    const result = newEntry(userId, req.body, diary);
-    res.status(result.statusCode).send(result.data);
-  });
+  app.post(`${Constants.apiBaseURL}/:userId/entries`, validate(EntryValidation.create), EntryController.create);
   // PUT /api/v1/users/:userId/entries/:entryId
-  app.put(`${route}/:userId/entries/:entryId`, (req, res) => {
-    const { userId, entryId } = req.params;
-    const result = modifyEntry(userId, entryId, req.body, diary);
-    res.status(result.statusCode).send(result.data);
-  });
+  app.put(`${Constants.apiBaseURL}/:userId/entries/:entryId`, validate(EntryValidation.update), EntryController.update);
 }
