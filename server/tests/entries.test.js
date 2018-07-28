@@ -9,7 +9,7 @@ import chaiHTTP from 'chai-http';
 import server from '../index';
 import diary from '../models/diary';
 
-const { expect } = chai.expect;
+const expect = chai.expect;
 
 chai.use(chaiHTTP);
 

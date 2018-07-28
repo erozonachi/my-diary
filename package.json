@@ -11,7 +11,8 @@
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "server": "nodemon server/index.js --exec babel-node",
     "heroku-postbuild": "npm install",
-    "start": "babel-node server/index.js"
+    "start": "babel-node server/index.js",
+    "spin-db": "cd server/models/ & babel-node otp.model.js"
   },
   "repository": {
     "type": "git",
@@ -24,10 +25,14 @@
   },
   "homepage": "https://github.com/erozonachi/my-diary#readme",
   "dependencies": {
+    "bcrypt": "^3.0.0",
     "body-parser": "^1.18.3",
+    "dotenv": "^6.0.0",
     "express": "^4.16.3",
     "express-validation": "^1.0.2",
-    "joi": "^13.4.0"
+    "joi": "^13.4.0",
+    "pg": "^7.4.3",
+    "pg-promise": "^8.4.5"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
