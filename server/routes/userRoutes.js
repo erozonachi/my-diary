@@ -7,9 +7,9 @@
 * */
 import * as Constants from '../helpers/Constants';
 import UserController from '../controllers/UserController';
-import UserValidation from '../helpers/validatelib/UserValidation';
+import AuthController from '../controllers/AuthController';
 
 export default function userRoutes(app, validate) {
   // POST /api/v1/users
-  app.post(Constants.apiBaseURL, validate(UserValidation.create), UserController.create);
+  app.post(`${Constants.apiBaseURL}/:userId/notify/:setNotice`, AuthController.isAuthourized, UserController.setReminder);
 }
