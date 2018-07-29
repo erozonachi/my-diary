@@ -26,16 +26,15 @@ export default {
       });
       createEntry.then((result) => {
         if (result.rowCount <= 0) {
-          res.status(500).send(Constants.systemError);
+          return res.status(500).json({ status: 'failed', message: Constants.systemError});
         } else {
-          entry.status = true;
-          res.status(201).send(JSON.stringify(entry));
+          return res.status(201).json({ status: 'succeeded', data: entry});
         }
       }, (err) => {
-        res.status(500).send(Constants.systemError);
+        return res.status(500).json({ status: 'failed', message: Constants.systemError});
       });
     } catch (error) {
-      return res.status(500).send(Constants.systemError);
+      return res.status(500).json({ status: 'failed', message: Constants.systemError});
     }
   },
   update(req, res) {
@@ -56,16 +55,15 @@ export default {
       });
       updateEntry.then((result) => {
         if (result.rowCount <= 0) {
-          res.status(404).send(Constants.notFound);
+          return res.status(404).json({ status: 'failed', message: Constants.notFound});
         } else {
-          entry.status = true;
-          res.status(200).send(JSON.stringify(entry));
+          return res.status(200).send({ status: 'succeeded', data: entry });
         }
       }, (err) => {
-        res.status(500).send(Constants.systemError);
+        return res.status(500).json({ status: 'failed', message: Constants.systemError});
       });
     } catch (error) {
-      return res.status(500).send(error.message/* Constants.systemError */);
+      return res.status(500).json({ status: 'failed', message: Constants.systemError});
     }
   },
   read(req, res) {
@@ -83,15 +81,15 @@ export default {
       });
       readEntry.then((result) => {
         if (result.rowCount <= 0) {
-          res.status(404).send(Constants.notFound);
+          return res.status(404).json({ status: 'failed', message: Constants.notFound});
         } else {
-          res.status(200).send(JSON.stringify(result.rows));
+          return res.status(200).json({ status: 'succeeded', data: result.rows });
         }
       }, (err) => {
-        res.status(500).send(Constants.systemError);
+        return res.status(500).json({ status: 'failed', message: Constants.systemError});
       });
     } catch (error) {
-      return res.status(500).send(Constants.systemError);
+      return res.status(500).json({ status: 'failed', message: Constants.systemError});
     }
   },
   readAll(req, res) {
@@ -109,15 +107,15 @@ export default {
       });
       readEntry.then((result) => {
         if (result.rowCount <= 0) {
-          res.status(404).send(Constants.notFound);
+          return res.status(404).json({ status: 'failed', message: Constants.notFound});
         } else {
-          res.status(200).send(JSON.stringify(result.rows));
+          return res.status(200).json({ status: 'succeeded', data: result.rows });
         }
       }, (err) => {
-        res.status(500).send(Constants.systemError);
+        return res.status(500).json({ status: 'failed', message: Constants.systemError});
       });
     } catch (error) {
-      return res.status(500).send(Constants.systemError);
+      return res.status(500).json({ status: 'failed', message: Constants.systemError});
     }
   },
 };

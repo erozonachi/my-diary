@@ -10,6 +10,7 @@ import bodyParser from 'body-parser';
 import validate from 'express-validation';
 import routes from './routes/routes';
 
+dotenv.config();
 const app = express();
 
 const port = process.env.PORT || 8000;
