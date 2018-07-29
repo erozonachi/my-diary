@@ -16,7 +16,10 @@ export default {
       user.registeredAt = new Date().toLocaleString();
       const createUser = new Promise((resolve, reject) => {
         bcrypt.hash(user.password, Constants.hashSaltRounds).then((hash) => {
-          const connector = new pg.Client(Constants.dbConnection);
+          const connector = new pg.Client({
+            connectionString: process.env.DATABASE_URL,
+            ssl: true,
+          });
           connector.connect();
           const result = connector.query('INSERT INTO account(first_name, last_name, username, email, password, registered_at) values($1, $2, $3, $4, $5, $6)',
           [user.firstName, user.lastName, user.username, user.email, hash, user.registeredAt]);
@@ -46,7 +49,10 @@ export default {
     try {
       const { loginName, loginPassword } = req.body;
       const authResult = {};
-      const connector = new pg.Client(Constants.dbConnection);
+      const connector = new pg.Client({
+        connectionString: process.env.DATABASE_URL,
+        ssl: true,
+      });
       connector.connect();
       const result = connector.query('SELECT * FROM account WHERE username=($1) OR email=($1)', [loginName]);
       result.then((result) => {
