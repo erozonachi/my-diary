@@ -6,7 +6,6 @@
 * */
 import nodemailer from 'nodemailer';
 import pg from 'pg';
-import * as Constants from './Constants';
 
 export default {
   sendReminder() {
@@ -19,7 +18,10 @@ export default {
     });
     try {
       const reminder = new Promise((resolve, reject) => {
-        const connector = new pg.Client(Constants.dbConnection);
+        const connector = new pg.Client({
+          connectionString: process.env.DATABASE_URL,
+          ssl: true,
+        });
         connector.connect();
         const result = connector.query('SELECT a.email, s.reminder_status FROM account AS a, setting AS s WHERE a.acct_id=s.acct_id AND s.reminder_status=true');
         result.then((result) => {

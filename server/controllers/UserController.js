@@ -4,7 +4,6 @@
 * @description A module that saves new user object to a list of users
 *
 * */
-import bcrypt from 'bcrypt';
 import pg from 'pg';
 import * as Constants from '../helpers/Constants';
 
@@ -13,7 +12,10 @@ export default {
     try {
       const { userId, setNotice } = req.params;
       const toggleReminder = new Promise((resolve, reject) => {
-        const connector = new pg.Client(Constants.dbConnection);
+        const connector = new pg.Client({
+          connectionString: process.env.DATABASE_URL,
+          ssl: true,
+        });
         connector.connect();
         const result = connector.query('SELECT * FROM setting WHERE acct_id=($1)', [userId]);
         result.then((result) => {
