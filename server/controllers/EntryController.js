@@ -20,8 +20,8 @@ export default {
         [userId, entry.title, entry.description, entry.conclusion, entry.createdAt]);
         result.then((result) => {
           resolve(result);
-        }, (err) => {
-          reject(err);
+        }, (error) => {
+          reject(error);
         });
       });
       createEntry.then((result) => {
@@ -30,7 +30,7 @@ export default {
         } else {
           return res.status(201).json({ status: 'succeeded', data: entry});
         }
-      }, (err) => {
+      }, (error) => {
         return res.status(500).json({ status: 'failed', message: Constants.systemError});
       });
     } catch (error) {
@@ -49,8 +49,8 @@ export default {
         [entry.title, entry.description, entry.conclusion, entry.updatedAt, entryId, userId]);
         result.then((result) => {
           resolve(result);
-        }, (err) => {
-          reject(err);
+        }, (error) => {
+          reject(error);
         });
       });
       updateEntry.then((result) => {
@@ -59,7 +59,7 @@ export default {
         } else {
           return res.status(200).send({ status: 'succeeded', data: entry });
         }
-      }, (err) => {
+      }, (error) => {
         return res.status(500).json({ status: 'failed', message: Constants.systemError});
       });
     } catch (error) {
@@ -75,8 +75,8 @@ export default {
         const result = connector.query('SELECT * FROM entry WHERE id=($1) AND acct_id=($2)', [entryId, userId]);
         result.then((result) => {
           resolve(result);
-        }, (err) => {
-          reject(err);
+        }, (error) => {
+          reject(error);
         });
       });
       readEntry.then((result) => {
@@ -85,7 +85,7 @@ export default {
         } else {
           return res.status(200).json({ status: 'succeeded', data: result.rows });
         }
-      }, (err) => {
+      }, (error) => {
         return res.status(500).json({ status: 'failed', message: Constants.systemError});
       });
     } catch (error) {
@@ -101,8 +101,8 @@ export default {
         const result = connector.query('SELECT * FROM entry WHERE acct_id=($1) ORDER BY created_at DESC', [userId]);
         result.then((result) => {
           resolve(result);
-        }, (err) => {
-          reject(err);
+        }, (error) => {
+          reject(error);
         });
       });
       readEntry.then((result) => {
@@ -111,7 +111,7 @@ export default {
         } else {
           return res.status(200).json({ status: 'succeeded', data: result.rows });
         }
-      }, (err) => {
+      }, (error) => {
         return res.status(500).json({ status: 'failed', message: Constants.systemError});
       });
     } catch (error) {

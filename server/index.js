@@ -4,11 +4,17 @@
 * @description entry-point (Server) of MyDiary Applicaction
 *
 * */
+import cron from 'node-cron';
+import UserSettings from './helpers/UserSettings';
 import express from 'express';
 import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
 import validate from 'express-validation';
 import routes from './routes/routes';
+
+cron.schedule('0 11 * * *', () => {
+  UserSettings.sendReminder();
+}, true);
 
 dotenv.config();
 const app = express();
