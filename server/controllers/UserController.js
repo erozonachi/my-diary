@@ -12,10 +12,10 @@ export default {
     try {
       const { userId, setNotice } = req.params;
       const toggleReminder = new Promise((resolve, reject) => {
-        const connector = new pg.Client({
+        const connector = new pg.Client(`${process.env.DATABASE_URL}`/* {
           connectionString: process.env.DATABASE_URL,
           ssl: true,
-        });
+        } */);
         connector.connect();
         const result = connector.query('SELECT * FROM setting WHERE acct_id=($1)', [userId]);
         result.then((result) => {

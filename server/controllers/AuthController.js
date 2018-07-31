@@ -8,6 +8,7 @@ import pg from 'pg';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import * as Constants from '../helpers/Constants';
+import Mail from '../helpers/Mail';
 
 export default {
   signUp(req, res) {
@@ -16,20 +17,35 @@ export default {
       user.registeredAt = new Date().toLocaleString();
       const createUser = new Promise((resolve, reject) => {
         bcrypt.hash(user.password, Constants.hashSaltRounds).then((hash) => {
-          const connector = new pg.Client({
+          const connector = new pg.Client(`${process.env.DATABASE_URL}`/* {
             connectionString: process.env.DATABASE_URL,
             ssl: true,
-          });
+          } */);
           connector.connect();
-          const result = connector.query('INSERT INTO account(first_name, last_name, username, email, password, registered_at) values($1, $2, $3, $4, $5, $6)',
-          [user.firstName, user.lastName, user.username, user.email, hash, user.registeredAt]);
-          result.then((result) => {
-            resolve(result);
-          }, (err) => {
-            reject(err);
-          });
-        }, (err) => {
-          reject(err);
+          const checkUniqueness = connector.query('SELECT * FROM account WHERE username=($1) OR email=($2)', [user.username, user.email]);
+          checkUniqueness.then(result => {
+            if (result.rowCount > 0) {
+              if (result.rows[0].username === user.username) {
+                const error = {status: 'failed', message: 'Username is taken'};
+                reject(error);
+              } else {
+                const error = {status: 'failed', message: 'Email already in use'};
+                reject(error);
+              }
+            } else {
+              const result = connector.query('INSERT INTO account(first_name, last_name, username, email, password, registered_at) values($1, $2, $3, $4, $5, $6)',
+              [user.firstName, user.lastName, user.username, user.email, hash, user.registeredAt]);
+              result.then((result) => {
+                resolve(result);
+              }, (error) => {
+                reject(error);
+              });
+            }
+          }, error => {
+            reject(error);
+          })
+        }, (error) => {
+          reject(error);
         });
       });
       createUser.then((result) => {
@@ -38,7 +54,10 @@ export default {
         } else {
           return res.status(201).json({ status: 'succeeded', data: user });
         }
-      }, (err) => {
+      }, (error) => {
+        if (error.status === 'failed') {
+          return res.status(400).json(error);
+        }
         return res.status(500).json({ status: 'failed', message: Constants.systemError});
       });
     } catch (error) {
@@ -49,10 +68,10 @@ export default {
     try {
       const { loginName, loginPassword } = req.body;
       const authResult = {};
-      const connector = new pg.Client({
+      const connector = new pg.Client(`${process.env.DATABASE_URL}`/* {
         connectionString: process.env.DATABASE_URL,
         ssl: true,
-      });
+      } */);
       connector.connect();
       const result = connector.query('SELECT * FROM account WHERE username=($1) OR email=($1)', [loginName]);
       result.then((result) => {
@@ -71,12 +90,21 @@ export default {
             const tokenPaylod = {
               id: authResult.id,
               loginName,
-              loginPassword,
             }
             const token = jwt.sign(tokenPaylod, process.env.SECRET_KEY, {expiresIn: '1d'});
             if (!token) {
               return res.status(500).json({ status: 'failed', message: Constants.systemError});
             } else {
+              const reminderMsg = {
+                from: "noreply.appmydiary@gmail.com",
+                to: authResult.email,
+                subject: 'Login Notification',
+                text: `Hi ${authResult.name}! Your account was logged into few minutes ago. If you are aware of this, please quickly reset your password`,
+              };
+              Mail.messanger().sendMail(reminderMsg, (error, info) => {
+                  if (error) {  return error; }
+                  else if (info) {  return info; }
+              });
               authResult.accessToken = token;
               return res.status(200).json({ status: 'succeeded', data: authResult });
             }
@@ -94,15 +122,15 @@ export default {
       return res.status(500).json({ status: 'failed', message: Constants.systemError});
     }
   },
-  isAuthourized(req, res, next) {
+  isAuthenticated(req, res, next) {
     const token = req.headers['x-access-token'];
 
     if (token) {
       jwt.verify(token, process.env.SECRET_KEY, (error, decoded) => {
         if (error) {
-          return res.status(401).json({ status: 'failed', message: 'Failed to authenticate access token.' });
+          return res.status(401).json({ status: 'failed', message: 'Authentication failed.' });
         } else {
-          if (req.params.userId != decoded.id) {
+          if (parseInt(req.params.userId, 10) !== parseInt(decoded.id)) {
             return res.status(401).json({ status: 'failed', message: 'Compromised access token'});
           } else {
             next();
@@ -112,7 +140,7 @@ export default {
     } else {
       return res.status(403).send({ 
         status: 'failed', 
-        message: 'Access token not provided',
+        message: 'Not authenticated',
       });
     }
   }
