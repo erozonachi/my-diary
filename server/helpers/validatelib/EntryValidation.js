@@ -4,39 +4,71 @@
 * @description A module that validates request payloads for entry resource
 *
 * */
-import Joi from 'joi';
+import FieldValidation from './FieldValidation';
 
 export default {
-  create: {
-    body: {
-      title: Joi.string().max(50).required(),
-      description: Joi.string().max(500).required(),
-      conclusion: Joi.string().max(200).allow(''),
-    },
-    params: {
-      userId: Joi.number().required(),
-    },
+  create(req, res, next) {
+    if (FieldValidation.isEmpty(req.body.title)) {
+      return res.status(400).json({status: 'failed', message: 'Title is required'});
+    }
+    if (FieldValidation.isEmpty(req.body.description)) {
+      return res.status(400).json({status: 'failed', message: 'Description is required'});
+    }
+    if (!FieldValidation.maxLength(req.body.title, 50)) {
+      return res.status(400).json({status: 'failed', message: 'Title: max length of 50 exceeded'});
+    }
+    if (!FieldValidation.maxLength(req.body.description, 500)) {
+      return res.status(400).json({status: 'failed', message: 'Description: max length of 500 exceeded'});
+    }
+    if (!FieldValidation.isEmpty(req.body.conclusion)) {
+      if (!FieldValidation.maxLength(req.body.conclusion, 200)) {
+        return res.status(400).json({status: 'failed', message: 'Conclusion: max length of 200 exceeded'});
+      }
+    }
+    if (!FieldValidation.isNumber(req.params.userId)) {
+      return res.status(400).json({status: 'failed', message: 'User ID must be a number'});
+    }
+    next();
   },
-  update: {
-    body: {
-      title: Joi.string().max(50).required(),
-      description: Joi.string().max(500).required(),
-      conclusion: Joi.string().max(200).allow(''),
-    },
-    params: {
-      userId: Joi.number().required(),
-      entryId: Joi.number().required(),
-    },
+  update(req, res, next) {
+    if (FieldValidation.isEmpty(req.body.title)) {
+      return res.status(400).json({status: 'failed', message: 'Title is required'});
+    }
+    if (FieldValidation.isEmpty(req.body.description)) {
+      return res.status(400).json({status: 'failed', message: 'Description is required'});
+    }
+    if (!FieldValidation.maxLength(req.body.title, 50)) {
+      return res.status(400).json({status: 'failed', message: 'Title: max length of 50 exceeded'});
+    }
+    if (!FieldValidation.maxLength(req.body.description, 500)) {
+      return res.status(400).json({status: 'failed', message: 'Description: max length of 500 exceeded'});
+    }
+    if (!FieldValidation.isEmpty(req.body.conclusion)) {
+      if (!FieldValidation.maxLength(req.body.conclusion, 200)) {
+        return res.status(400).json({status: 'failed', message: 'Conclusion: max length of 200 exceeded'});
+      }
+    }
+    if (!FieldValidation.isNumber(req.params.userId)) {
+      return res.status(400).json({status: 'failed', message: 'User ID must be a number'});
+    }
+    if (!FieldValidation.isNumber(req.params.entryId)) {
+      return res.status(400).json({status: 'failed', message: 'Entry ID must be a number'});
+    }
+    next();
   },
-  read: {
-    params: {
-      userId: Joi.number().required(),
-      entryId: Joi.number().required(),
-    },
+  read(req, res, next) {
+    if (!FieldValidation.isNumber(req.params.userId)) {
+      return res.status(400).json({status: 'failed', message: 'User ID must be a number'});
+    }
+    if (!FieldValidation.isNumber(req.params.entryId)) {
+      return res.status(400).json({status: 'failed', message: 'Entry ID must be a number'});
+    }
+    next();
   },
-  readAll: {
-    params: {
-      userId: Joi.number().required(),
-    },
+  readAll(req, res, next) {
+    if (!FieldValidation.isNumber(req.params.userId)) {
+      return res.status(400).json({status: 'failed', message: 'User ID must be a number'});
+    }
+    next();
   },
 };

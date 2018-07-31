@@ -9,7 +9,6 @@ import UserSettings from './helpers/UserSettings';
 import express from 'express';
 import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
-import validate from 'express-validation';
 import routes from './routes/routes';
 
 cron.schedule('0 11 * * *', () => {
@@ -23,20 +22,9 @@ const port = process.env.PORT || 8000;
 
 app.use(bodyParser.json({ extended: true }));
 
-routes(app, validate);
-app.use((err, req, res, next) => {
-  if (err instanceof validate.ValidationError) {
-    res.status(err.status).json(err);
-  } else {
-    res.status(500)
-      .json({
-        status: err.status,
-        message: err.message,
-      });
-  }
-});
+routes(app);
 app.listen(port, () => {
-  console.log(`We are live on ${port}`);
+  console.log(`Live on ${port}`);
 });
 
 export default app; // for testing
