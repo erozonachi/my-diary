@@ -12,7 +12,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
    </head>
    
-   <body>
+   <body class="bg-img">
       <main>
           <header id="dashboard-header">
             <div class="nav" id="nav">
@@ -29,10 +29,8 @@
                 </a>
             </div>
           </header>
-          <a class="hiddenanchor" id="toEntries"></a>
-            <a class="hiddenanchor" id="toProfile"></a>
             <div class="split right">
-          <div id="allEntries" class="animate form-container"> 
+          <div id="allEntries" class="entries-container"> 
                 <div id="myEntries" class="header">
                   <h2>My Diary Entries</h2><br/>
                   <div><span onclick="" class="addBtn collapsible">Toggle Entry Form</span></div>
@@ -40,19 +38,19 @@
                     <p>
                     <form id="entryForm" onsubmit="return false;">
                       <input type="hidden" id="entryId" value=""/>
-                      <label for="title"><b>Entry Title</b></label>
+                      <label class="white" for="title"><b>Entry Title</b></label>
                     <div class="tooltip">
                       <input type="text" id="title" name="title" placeholder="Give entry a title" required>
                       <span class="tooltiptext">Title not more than 50 characters</span>
                     </div>
                       
-                      <label for="desc"><b>Description</b></label>
+                      <label class="white" for="desc"><b>Description</b></label>
                     <div class="tooltip">
                       <textarea id="desc" name="desc" placeholder="Describe entry" required></textarea>
                       <span class="tooltiptext">Describe entry</span>
                     </div>
                       
-                      <label for="conclude"><b>Conclusion (optional)</b></label>
+                      <label class="white" for="conclude"><b>Conclusion (optional)</b></label>
                       <div class="tooltip">
                         <input type="text" id="conclude" name="conclude" placeholder="Conclude entry">
                         <span class="tooltiptext">Conclude entry (not required)</span>
@@ -66,123 +64,12 @@
                   
                 </div>
                 <div>
-                  <div>
+                  <!-- <div>
                      <form id="searchForm" onsubmit="return false;"><div class="search-container"><input class="search-box" type="text" id="mySearch" placeholder="Search entries..."></div>
                       <div class="one-in-five"><button type="submit" class="btn" id="btnSearch"><i class="fa fa-search"></i></button></div></form>
-                  </div>
+                  </div> -->
+                <div id="noEntry" class="hidden">You have no entry in your diary. Toggle the Button above to add entry</div>
                 <ul id="myUL">
-                    <li class=""><div><div class="listHead">
-                        <span>First day in Andela.. 25-06-2018</span>
-                        <button class="danger del"><i class="fa fa-trash">&nbsp;Delete</i></button>
-                        <button class="collapsible toggle"><i class="fa fa-angle-down"></i></button></div>
-                      <div class="content">
-                        <p>
-                            <div class="readView">
-                            <strong>Title</strong>
-                            <small>Some Title...</small><br/>
-                            <strong>Description</strong>
-                            <small>Some Description...</small><br/>
-                            <strong>Conclusion</strong>
-                            <small>Some Conclusion (if any) blah.......................</small><br/>
-                            <strong>Date</strong>
-                            <small>Some Date...</small><br/>
-                            <a href="#entryDiv" onclick="openEditForm('2','London Tour', 'It was awesome', 'It was fun');">Make changes</a>
-                            </div>
-                        </p>
-                      </div></div></li>
-                    <li class=""><div><div class="listHead">
-                        <span>My best birthday bash.. 07-07-2018</span>
-                        <button class="danger del"><i class="fa fa-trash"></i>&nbsp;Delete</button>
-                        <button class="collapsible toggle"><i class="fa fa-angle-down"></i></button></div>
-                      <div class="content">
-                        <p><div>
-                                <strong>Title</strong>
-                                <small>Some Title...</small><br/>
-                                <strong>Description</strong>
-                                <small>Some Description...</small><br/>
-                                <strong>Conclusion</strong>
-                                <small>Some Conclusion (if any) blah.......................</small><br/>
-                                <strong>Date</strong>
-                                <small>Some Date...</small><br/>
-                            <a href="#entryDiv" onclick="openEditForm('2','London Tour', 'It was awesome', 'It was fun');">Make changes</a>
-                        </div></p>
-                      </div></div></li>
-                  <li><div><div class="listHead">
-                    <span>My first day in gym... 07-07-2018</span>
-                    <button class="danger del"><i class="fa fa-trash"></i>&nbsp;Delete</button>
-                    <button class="collapsible toggle"><i class="fa fa-angle-down"></i></button></div>
-                  <div class="content">
-                    <p>
-                      <div>
-                            <strong>Title</strong>
-                            <small>Some Title...</small><br/>
-                            <strong>Description</strong>
-                            <small>Some Description...</small><br/>
-                            <strong>Conclusion</strong>
-                            <small>Some Conclusion (if any) blah.......................</small><br/>
-                            <strong>Date</strong>
-                            <small>Some Date...</small><br/>
-                          <a href="#entryDiv" onclick="openEditForm('2','London Tour', 'It was awesome', 'It was fun');">Make changes</a>
-                      </div>
-                    </p>
-                  </div></div></li>
-                  <li class=""><div><div class="listHead">
-                      <span>First holidays in Toronto.. 03-05-2018</span>
-                      <button class="danger del"><i class="fa fa-trash"></i>&nbsp;Delete</button>
-                      <button class="collapsible toggle"><i class="fa fa-angle-down"></i></button></div>
-                    <div class="content">
-                      <p>
-                        <div>
-                            <strong>Title</strong>
-                            <small>Some Title...</small><br/>
-                            <strong>Description</strong>
-                            <small>Some Description...</small><br/>
-                            <strong>Conclusion</strong>
-                            <small>Some Conclusion (if any) blah.......................</small><br/>
-                            <strong>Date</strong>
-                            <small>Some Date...</small><br/>
-                            <a href="#entryDiv" onclick="openEditForm('2','London Tour', 'It was awesome', 'It was fun');">Make changes</a>
-                        </div>
-                      </p>
-                    </div></div></li>
-                  <li class=""><div><div class="listHead">
-                      <span>First meeting with Obama.. 03-05-2018</span>
-                      <button class="danger del"><i class="fa fa-trash"></i>&nbsp;Delete</button>
-                      <button class="collapsible toggle"><i class="fa fa-angle-down"></i></button></div>
-                    <div class="content">
-                      <p>
-                        <div id="read">
-                            <strong>Title</strong>
-                            <small>Some Title...</small><br/>
-                            <strong>Description</strong>
-                            <small>Some Description...</small><br/>
-                            <strong>Conclusion</strong>
-                            <small>Some Conclusion (if any) blah.......................</small><br/>
-                            <strong>Date</strong>
-                            <small>Some Date...</small><br/>
-                            <a href="#entryDiv" onclick="openEditForm('2','London Tour', 'It was awesome', 'It was fun');">Make changes</a>
-                        </div>
-                      </p>
-                    </div></div></li>
-                  <li class=""><div><div class="listHead">
-                      <span>Broke up with Verneza.. 03-04-2018</span>
-                      <button class="danger del"><i class="fa fa-trash"></i>&nbsp;Delete</button>
-                      <button class="collapsible toggle"><i class="fa fa-angle-down"></i></button></div>
-                    <div class="content">
-                      <p>
-                        <div>
-                            <strong>Title</strong>
-                            <small>Some Title...</small><br/>
-                            <strong>Description</strong>
-                            <small>Some Description...</small><br/>
-                            <strong>Conclusion</strong>
-                            <small>Some Conclusion (if any) blah.......................</small><br/>
-                            <strong>Date</strong>
-                            <small>Some Date...</small><br/>
-                            <a href="#entryDiv" onclick="openEditForm('2','London Tour', 'It was awesome', 'It was fun');">Make changes</a>
-                        </div>
-                      </p>
-                    </div></div></li>
                 </ul></div>
                 </div></div>
                 <div class="split left">
@@ -214,6 +101,7 @@
                 </div></div>
       </main>
       <script type="text/javascript" src="../js/interactive.js"></script>
+      <script type="text/javascript" src="../js/fetchAPI.js"></script>
       <script type="text/javascript" src="../js/jquery.js"></script>
       <script type="text/javascript" src="../js/diary-functions.js"></script>
    </body>

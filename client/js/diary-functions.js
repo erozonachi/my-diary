@@ -43,7 +43,7 @@ const entryList = [
 function renderEntryList (list) {
   list.forEach(element => {
       const span = document.createElement("span");
-      let txt = document.createTextNode(element["title"]+".. "+element["date"]);
+      let txt = document.createTextNode(element["title"]+" - "+element["created_at"].replace('T',' ').replace('.000Z',''));
       span.appendChild(txt);
 
       const i1 = document.createElement("i");
@@ -67,50 +67,67 @@ function renderEntryList (list) {
       txt = document.createTextNode("Title: ");
       strong1.appendChild(txt);
       readDiv.appendChild(strong1);
+      const titleHolder = document.createElement("div");
+      titleHolder.setAttribute("class", "entry-detail odd");
       const small1 = document.createElement("small");
       txt = document.createTextNode(element["title"]);
       small1.appendChild(txt);
-      readDiv.appendChild(small1);
-      readDiv.appendChild(br);
+      titleHolder.appendChild(small1);
+      readDiv.appendChild(titleHolder);
 
       const strong2 = document.createElement("strong");
       txt = document.createTextNode("Description: ");
       strong2.appendChild(txt);
       readDiv.appendChild(strong2);
+      const descHolder = document.createElement("div");
+      descHolder.setAttribute("class", "entry-detail even");
       const small2 = document.createElement("small");
-      txt = document.createTextNode(element["desc"]);
+      txt = document.createTextNode(element["description"]);
       small2.appendChild(txt);
-      readDiv.appendChild(small2);
-      br = document.createElement("br");
-      readDiv.appendChild(br);
+      descHolder.appendChild(small2)
+      readDiv.appendChild(descHolder);
 
-      const strong3 = document.createElement("strong");
-      txt = document.createTextNode("Conclusion: ");
-      strong3.appendChild(txt);
-      readDiv.appendChild(strong3);
-      const small3 = document.createElement("small");
-      txt = document.createTextNode(element["conclude"]);
-      small3.appendChild(txt);
-      readDiv.appendChild(small3);
-      br = document.createElement("br");
-      readDiv.appendChild(br);
+      if (element['conclusion']) {
+        const strong3 = document.createElement("strong");
+        txt = document.createTextNode("Conclusion: ");
+        strong3.appendChild(txt);
+        readDiv.appendChild(strong3);
+        const concludeHolder = document.createElement("div");
+        concludeHolder.setAttribute("class", "entry-detail odd");
+        const small3 = document.createElement("small");
+        txt = document.createTextNode(element["conclusion"]);
+        small3.appendChild(txt);
+        concludeHolder.appendChild(small3);
+        readDiv.appendChild(concludeHolder);
+      }
 
       const strong4 = document.createElement("strong");
-      txt = document.createTextNode("Date: ");
+      txt = document.createTextNode("Created on: ");
       strong4.appendChild(txt);
       readDiv.appendChild(strong4);
+      const createdHolder = document.createElement("div");
+      if (element['conclusion']) {
+        createdHolder.setAttribute("class", "entry-detail even");
+      } else {
+        createdHolder.setAttribute("class", "entry-detail odd");
+      }
       const small4 = document.createElement("small")
-      txt = document.createTextNode(element["date"]);
+      txt = document.createTextNode(element["created_at"]);
       small4.appendChild(txt);
-      readDiv.appendChild(small4);
-      br = document.createElement("br");
-      readDiv.appendChild(br);
+      createdHolder.appendChild(small4)
+      readDiv.appendChild(createdHolder);
 
       const a = document.createElement("a");
       a.setAttribute("href","#entryDiv");
-      a.setAttribute("onclick",`openEditForm("${element["id"]}", "${element["title"]}", "${element["desc"]}", "${element["conclude"]}")`);
-      txt = document.createTextNode("Make changes");
-      a.appendChild(txt);
+      a.setAttribute("onclick",`openEditForm("${element["id"]}", "${element["title"]}", "${element["description"]}", "${element["conclusion"]}")`);
+      txt = document.createTextNode(" Make changes");
+      const editIcon = document.createElement("i");
+      editIcon.setAttribute("class", "fa fa-edit");
+      const editBtn = document.createElement("button");
+      editBtn.setAttribute("class", "submit");
+      editBtn.appendChild(editIcon);
+      editBtn.appendChild(txt);
+      a.appendChild(editBtn);
       readDiv.appendChild(a);
 
       const p = document.createElement("p");
@@ -135,7 +152,43 @@ function renderEntryList (list) {
   });
 }
 
-renderEntryList (entryList);
+function fetchAllEntries() {
+  const url = `${base_url}/${sessionStorage.userId}/entries`;
+  const noEntry = document.getElementById('noEntry');
+  const fetchData = { 
+    method: 'GET',
+    headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        "x-access-token": sessionStorage.token,
+    }
+  };
+
+  fetch(url, fetchData)
+  .then((resp) => resp.json(), (error) => {
+    noEntry.removeAttribute('class');
+    console.error(error);
+  })
+  .then((data) => {
+    if (data.status == 'success') {
+      noEntry.setAttribute('class', 'hidden');
+      renderEntryList(data.data);
+      console.log(data);
+    } else {
+      noEntry.removeAttribute('class');
+      console.log(data);
+    }
+  }, (error) => {
+    noEntry.removeAttribute('class');
+    console.error(error);
+  })
+  .catch ((error) => {
+    noEntry.removeAttribute('class');
+    console.error(error);
+  });
+}
+fetchAllEntries();
+
+/* renderEntryList (entryList); */
 
 const coll = document.getElementsByClassName("collapsible");
 let j = 0;
