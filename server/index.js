@@ -21,6 +21,11 @@ const app = express();
 const port = process.env.PORT || 8000;
 
 app.use(bodyParser.json({ extended: true }));
+app.use((req, res, next) => { // https://enable-cors.org/server_expressjs.html
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, x-access-token, Content-Type, Accept");
+  next();
+});
 
 routes(app);
 app.listen(port, () => {
