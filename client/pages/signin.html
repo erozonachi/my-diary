@@ -33,19 +33,17 @@
                     <div id="" class="form-container">
                     <h1>Sign In</h1>
                     <div id="toast"></div>
-                        <label for="name"><b>Your Username</b></label>
+                        <label for="name"><b>Username</b></label>
                         <div class="tooltip">
                             <input type="text" placeholder="Username" id="username" name="username" required>
-                            <span class="tooltiptext">Your username or email</span>
                         </div>
                     
-                        <label for="psw"><b>Your Password</b></label>
+                        <label for="psw"><b>Password</b></label>
                         <div class="tooltip">
                             <input type="password" placeholder="Password" id="password" name="password" required>
-                            <span class="tooltiptext">Your password</span>
                         </div>
                     
-                        <button type="submit" id="btnSignIn" class="big-btn"><i class="fa fa-lock"></i>&nbsp;Sign In</button>
+                        <button type="submit" id="btnSignIn" class="big-btn" onclick="signIn();"><i class="fa fa-lock"></i>&nbsp;Sign In</button>
                         <div><strong>Don't have an account? <a href="signup.html">Sign up</a> | Forgot Password? <a href="#toReset">Click me</a></strong></div>
                     </div>
                     </form>

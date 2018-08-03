@@ -12,22 +12,19 @@ export default {
       if (FieldValidation.isEmpty(req.body.title)) {
         return res.status(400).json({status: 'fail', message: 'Title is required'});
       }
-      if (FieldValidation.isEmpty(req.body.description)) {
+      if (FieldValidation.isEmpty(req.body.content)) {
         return res.status(400).json({status: 'fail', message: 'Description is required'});
       }
       if (!FieldValidation.maxLength(req.body.title, 50)) {
         return res.status(400).json({status: 'fail', message: 'Title: max length of 50 exceeded'});
       }
-      if (!FieldValidation.maxLength(req.body.description, 500)) {
+      if (!FieldValidation.maxLength(req.body.content, 500)) {
         return res.status(400).json({status: 'fail', message: 'Description: max length of 500 exceeded'});
       }
       if (!FieldValidation.isEmpty(req.body.conclusion)) {
         if (!FieldValidation.maxLength(req.body.conclusion, 200)) {
           return res.status(400).json({status: 'fail', message: 'Conclusion: max length of 200 exceeded'});
         }
-      }
-      if (!FieldValidation.isNumber(req.params.userId)) {
-        return res.status(400).json({status: 'fail', message: 'User ID must be a number'});
       }
       next();
     } catch (error) {
@@ -39,22 +36,19 @@ export default {
       if (FieldValidation.isEmpty(req.body.title)) {
         return res.status(400).json({status: 'fail', message: 'Title is required'});
       }
-      if (FieldValidation.isEmpty(req.body.description)) {
+      if (FieldValidation.isEmpty(req.body.content)) {
         return res.status(400).json({status: 'fail', message: 'Description is required'});
       }
       if (!FieldValidation.maxLength(req.body.title, 50)) {
         return res.status(400).json({status: 'fail', message: 'Title: max length of 50 exceeded'});
       }
-      if (!FieldValidation.maxLength(req.body.description, 500)) {
+      if (!FieldValidation.maxLength(req.body.content, 500)) {
         return res.status(400).json({status: 'fail', message: 'Description: max length of 500 exceeded'});
       }
       if (!FieldValidation.isEmpty(req.body.conclusion)) {
         if (!FieldValidation.maxLength(req.body.conclusion, 200)) {
           return res.status(400).json({status: 'fail', message: 'Conclusion: max length of 200 exceeded'});
         }
-      }
-      if (!FieldValidation.isNumber(req.params.userId)) {
-        return res.status(400).json({status: 'fail', message: 'User ID must be a number'});
       }
       if (!FieldValidation.isNumber(req.params.entryId)) {
         return res.status(400).json({status: 'fail', message: 'Entry ID must be a number'});
@@ -66,25 +60,12 @@ export default {
   },
   read(req, res, next) {
     try {
-      if (!FieldValidation.isNumber(req.params.userId)) {
-        return res.status(400).json({status: 'fail', message: 'User ID must be a number'});
-      }
       if (!FieldValidation.isNumber(req.params.entryId)) {
         return res.status(400).json({status: 'fail', message: 'Entry ID must be a number'});
       }
       next();
     } catch (error) {
-      return res.status(400).json({status: 'fail', message: 'User or entry ID not provided'});
-    }
-  },
-  readAll(req, res, next) {
-    try {
-      if (!FieldValidation.isNumber(req.params.userId)) {
-        return res.status(400).json({status: 'fail', message: 'User ID must be a number'});
-      }
-      next();
-    } catch (error) {
-      return res.status(400).json({status: 'fail', message: 'User ID not provided'});
+      return res.status(400).json({status: 'fail', message: 'Entry ID not provided'});
     }
   },
 };

@@ -4,6 +4,9 @@ env:
 language: node_js
 node_js:
   - "node"
+install: npm install
+services:
+ - postgresql
 addons:
   chrome: stable
 cache:
@@ -19,6 +22,8 @@ before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
+  - psql -c 'create database travis_ci_test;' -U postgres
+  - npm run migration
 
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT

@@ -31,21 +31,21 @@ export default {
         return res.status(400).json({status: 'fail', message: 'Last name can only contain letters'});
       }
       if (!FieldValidation.maxLength(req.body.firstName, 20)) {
-        return res.status(400).json({status: 'fail', message: 'First name: max length exceeded'});
+        return res.status(400).json({status: 'fail', message: 'First name: max length of 20 exceeded'});
       }
       if (!FieldValidation.maxLength(req.body.lastName, 20)) {
-        return res.status(400).json({status: 'fail', message: 'Last name: max length exceeded'});
+        return res.status(400).json({status: 'fail', message: 'Last name: max length of 20 exceeded'});
       }
       if (!FieldValidation.maxLength(req.body.username, 20)) {
-        return res.status(400).json({status: 'fail', message: 'Username: max length exceeded'});
+        return res.status(400).json({status: 'fail', message: 'Username: max length of 20 exceeded'});
       }
       if (!FieldValidation.maxLength(req.body.email, 45)) {
-        return res.status(400).json({status: 'fail', message: 'Email: max length exceeded'});
+        return res.status(400).json({status: 'fail', message: 'Email: max length of 45 exceeded'});
       }
       if (!FieldValidation.isEmail(req.body.email)) {
         return res.status(400).json({status: 'fail', message: 'Email not valid'});
       }
-      if (!FieldValidation.minLength(req.body.password)) {
+      if (!FieldValidation.minLength(req.body.password, 10)) {
         return res.status(400).json({status: 'fail', message: 'Password cannot be less than 10 characters'});
       }
       if (FieldValidation.isAlpha(req.body.password) || FieldValidation.isNumeric(req.body.password)) {
@@ -58,10 +58,10 @@ export default {
   },
   login(req, res, next) {
     try {
-      if (FieldValidation.isEmpty(req.body.loginName)) {
+      if (FieldValidation.isEmpty(req.body.username)) {
         return res.status(400).json({status: 'fail', message: 'Username or Email is required'});
       }
-      if (FieldValidation.isEmpty(req.body.loginPassword)) {
+      if (FieldValidation.isEmpty(req.body.password)) {
         return res.status(400).json({status: 'fail', message: 'Password is required'});
       }
       next();
@@ -71,9 +71,6 @@ export default {
   },
   reminder(req, res, next) {
     try{
-      if (!FieldValidation.isNumber(req.params.userId)) {
-        return res.status(400).json({status: 'fail', message: 'User ID must be a number'});
-      }
       if (FieldValidation.isEmpty(req.params.setNotice)) {
         return res.status(400).json({status: 'fail', message: 'setNotice value on or off is required'});
       }

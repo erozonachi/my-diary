@@ -3,12 +3,72 @@
  * @author: Eneh, James 
  */
 const base_url = 'http://localhost:8000/api/v1/users';
-$( document ).ready ( function () {
-
-  function makeToast (message) {
+$( document ).ready(function() {
+function makeToast (message) {
     $("#toast").html(message);
     $("#toast").addClass("show");
     setTimeout(function(){ $("#toast").removeClass("show") }, 4000);
+  }
+
+  function signIn() {
+    const username = document.getElementById('username');
+    const password = document.getElementById('password');
+    const btnLogin = document.getElementById('btnSignIn');
+    if(username.value.trim() == "") {
+      makeToast("Username is required");
+      return false;
+    }
+    if(password.value.trim() == "") {
+      makeToast("Password is required");
+      return false;
+    }
+
+    btnLogin.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Authenticating';
+    //http request
+    const payload = {
+      username: username.value,
+      password: password.value
+    };
+    const url = `${base_url}/auth/login`;
+    let fetchData = { 
+      method: 'POST', 
+      body: JSON.stringify(payload),
+      headers: {
+        "Content-Type": "application/json; charset=utf-8"
+      }
+    };
+
+    fetch(url, fetchData)
+    .then((resp) => resp.json(), (error) => {
+      console.error(error);
+      makeToast('Sign in cannot be completed at this time! Try again');
+      btnLogin.innerHTML = 'Sign In';
+    })
+    .then((data) => {
+      if (data.status == 'success') {
+        btnLogin.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Redirecting...';
+        sessionStorage.setItem('userId', data.data.id);
+        sessionStorage.setItem('fullName', data.data.name);
+        sessionStorage.setItem('email', data.data.email);
+        sessionStorage.setItem('token', data.data.accessToken);
+        console.log(data);
+        window.location.replace("dashboard.html");
+      } else {
+        makeToast(data.message);
+        btnLogin.innerHTML = 'Sign In';
+        console.log(data);
+      }
+    }, (error) => {
+      btnLogin.innerHTML = 'Sign In';
+      makeToast('Sign in cannot be completed at this time! Try again');
+      console.error(error);
+    })
+    .catch ((error) => {
+      btnLogin.innerHTML = 'Sign In';
+      makeToast('Unable to sign in, try again');
+      console.error(error);
+    });
+
   }
 
   $("#signUpForm").on("submit", function () {
@@ -110,65 +170,6 @@ $( document ).ready ( function () {
     });
   });
 
-  $("#signInForm").on("submit", function() {
-    const username = $("#username").val();
-    if($("#username").val().trim() == "") {
-      makeToast("Username is required");
-      return false;
-    }
-    if($("#password").val().trim() == "") {
-      makeToast("Password is required");
-      return false;
-    }
-
-    $("#btnSignIn").html('<i class="fa fa-spinner fa-spin"></i> Authenticating');
-    //http request
-    const payload = {
-      loginName: $("#username").val(),
-      loginPassword: $("#password").val()
-    };
-    const url = `${base_url}/auth/login`;
-    let fetchData = { 
-      method: 'POST', 
-      body: JSON.stringify(payload),
-      headers: {
-        "Content-Type": "application/json; charset=utf-8"
-      }
-    };
-
-    fetch(url, fetchData)
-    .then((resp) => resp.json(), (error) => {
-      console.error(error);
-      makeToast('Sign in cannot be completed at this time! Try again');
-      $("#btnSignIn").html('Sign In');
-    })
-    .then((data) => {
-      if (data.status == 'success') {
-        $("#btnSignIn").html('<i class="fa fa-spinner fa-spin"></i> Redirecting...');
-        sessionStorage.setItem('userId', data.data.id);
-        sessionStorage.setItem('fullName', data.data.name);
-        sessionStorage.setItem('email', data.data.email);
-        sessionStorage.setItem('token', data.data.accessToken);
-        console.log(data);
-        window.location.replace("dashboard.html");
-      } else {
-        makeToast(data.message);
-        $("#btnSignIn").html('Sign In');
-        console.log(data);
-      }
-    }, (error) => {
-      $("#btnSignIn").html('Sign In');
-      makeToast('Sign in cannot be completed at this time! Try again');
-      console.error(error);
-    })
-    .catch ((error) => {
-      $("#btnSignIn").html('Sign In');
-      makeToast('Unable to sign in, try again');
-      console.error(error);
-    });
-
-  });
-
   $("#entryForm").on("submit", function () {
     if ($("#title").val().trim() == "") {
       makeToast("Entry title is required");
@@ -184,7 +185,7 @@ $( document ).ready ( function () {
     }
     const payload = {
       title: $("#title").val(),
-      description: $("#desc").val(),
+      content: $("#desc").val(),
       conclusion: $("#conclude").val(),
     }
     $("#submit").html('<i class="fa fa-spinner fa-spin"></i> Wait');
@@ -268,25 +269,6 @@ $( document ).ready ( function () {
       });
     }
   });
-
-  /* $("#searchForm").on("submit", function () {
-    if ($("#mySearch").val().trim() != "") {
-      //http GET request to search entry data-store
-      //demo
-      $("#btnSearch").html('<i class="fa fa-spinner fa-spin"></i>');
-      setTimeout(function(){ $("#btnSearch").html('<i class="fa fa-search"></i>'); }, 5000);
-    }
-  });
-
-  $("#picForm").on("submit", function () {
-    if ($("#profilePic").val().trim == "") {
-      makeToast("Image is required");
-      return false;
-    }
-
-    $("#savePic").html('<i class="fa fa-spinner fa-spin"></i>');
-    setTimeout(function(){ $("#savePic").html('<i class="fa fa-save"></i> Save'); }, 5000);
-  }); */
 
 });
 
