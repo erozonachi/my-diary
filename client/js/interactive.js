@@ -2,23 +2,38 @@
  * 
  * @author: Eneh, James 
  */
-
+const base_url = 'http://localhost:8000/api/v1/users';
 $( document ).ready ( function () {
 
   function makeToast (message) {
     $("#toast").html(message);
     $("#toast").addClass("show");
-    setTimeout(function(){ $("#toast").removeClass("show") }, 3000);
+    setTimeout(function(){ $("#toast").removeClass("show") }, 4000);
   }
 
   $("#signUpForm").on("submit", function () {
     const username = $("#username").val().trim()
-    const alphaNum = /^[a-z0-9]+$/i;
+    const nameFormat = /^[a-zA-Z]+$/i;
+    const alphaNum = /^[a-zA-Z0-9]+$/i;
+    if ($("#fName").val().trim() == "") {
+      makeToast("First Name is required");
+      return false;
+    } else if (!nameFormat.test($("#fName").val().trim())) {
+      makeToast("First Name can only contain letters");
+      return false;
+    }
+    if ($("#lName").val().trim() == "") {
+      makeToast("Last Name is required");
+      return false;
+    } else if (!nameFormat.test($("#lName").val().trim())) {
+      makeToast("Last Name can only contain letters");
+      return false;
+    }
     if (username == "") {
       makeToast("Username is required");
       return false;
     } else if (!alphaNum.test(username)) {
-      makeToast("Username can only contain letters and number");
+      makeToast("Username can only contain letters and digits");
       return false;
     } else if (!isNaN(username.charAt(0))) {
       makeToast("Username cannot start with a number");
@@ -37,7 +52,7 @@ $( document ).ready ( function () {
     if (password.length < 10) {
       makeToast("Password not up to 10 characters");
       return false;
-    } else if (/^[a-z]+$/i.test(password) || /^[0-9]+$/i.test(password)) {
+    } else if (/^[a-zA-Z]+$/i.test(password) || /^[0-9]+$/i.test(password)) {
       makeToast("Weak password: mix letters, numbers, and special characters");
       return false;
     } else if ($("#confirm").val() != password) {
@@ -46,8 +61,53 @@ $( document ).ready ( function () {
     }
     $("#btnSignUp").html('<i class="fa fa-spinner fa-spin"></i> Wait');
     //http request
-    //demo
-    setTimeout(function(){ $("#btnSignUp").html("Sign Up"); makeToast("Form submitted!"); }, 5000);
+    const payload = {
+      firstName: $("#fName").val(),
+      lastName: $("#lName").val(),
+      username: $("#username").val(),
+      email: $("#email").val(),
+      password: $("#password").val()
+    };
+
+    const url = `${base_url}/auth/signup`;
+    console.log(payload);
+    let fetchData = { 
+      method: 'POST', 
+      body: JSON.stringify(payload),
+      headers: {
+          "Content-Type": "application/json; charset=utf-8"
+      }
+    };
+
+    fetch(url, fetchData)
+    .then((resp) => resp.json(), (error) => {
+      console.log(resp);
+      console.error(error);
+      makeToast('SignUp cannot be completed at this time! Try again');
+    })
+    .then((data) => {
+      //const res = JSON.parse(data);
+      if (data.status == 'success') {
+        console.log(data);
+        $("#btnSignUp").html('<i class="fa fa-spinner fa-spin"></i> Redirecting...');
+        makeToast('Sign up successful!');
+        window.location.replace("signin.html")
+      } else {
+        console.log(data);
+        makeToast(data.message);
+        $("#btnSignUp").html('Sign Up');
+      }
+      //return data;
+    }, (error) => {
+      console.error(error);
+      makeToast('SignUp cannot be completed at this time! Try again');
+      $("#btnSignUp").html('Sign Up');
+    })
+    .catch ((error) => {
+      console.error(error);
+      makeToast('Unable to sign up, try again');
+      $("#btnSignUp").html('Sign Up');
+    });
   });
 
   $("#signInForm").on("submit", function() {
@@ -56,15 +116,56 @@ $( document ).ready ( function () {
       makeToast("Username is required");
       return false;
     }
-    if($("#password").val() == "") {
+    if($("#password").val().trim() == "") {
       makeToast("Password is required");
       return false;
     }
 
     $("#btnSignIn").html('<i class="fa fa-spinner fa-spin"></i> Authenticating');
     //http request
-    //demo
-    setTimeout(function(){ $("#btnSignIn").html('<i class="fa fa-lock"></i> Sign In'); window.location.replace("dashboard.html") }, 5000);
+    const payload = {
+      loginName: $("#username").val(),
+      loginPassword: $("#password").val()
+    };
+    const url = `${base_url}/auth/login`;
+    let fetchData = { 
+      method: 'POST', 
+      body: JSON.stringify(payload),
+      headers: {
+        "Content-Type": "application/json; charset=utf-8"
+      }
+    };
+
+    fetch(url, fetchData)
+    .then((resp) => resp.json(), (error) => {
+      console.error(error);
+      makeToast('Sign in cannot be completed at this time! Try again');
+      $("#btnSignIn").html('Sign In');
+    })
+    .then((data) => {
+      if (data.status == 'success') {
+        $("#btnSignIn").html('<i class="fa fa-spinner fa-spin"></i> Redirecting...');
+        sessionStorage.setItem('userId', data.data.id);
+        sessionStorage.setItem('fullName', data.data.name);
+        sessionStorage.setItem('email', data.data.email);
+        sessionStorage.setItem('token', data.data.accessToken);
+        console.log(data);
+        window.location.replace("dashboard.html");
+      } else {
+        makeToast(data.message);
+        $("#btnSignIn").html('Sign In');
+        console.log(data);
+      }
+    }, (error) => {
+      $("#btnSignIn").html('Sign In');
+      makeToast('Sign in cannot be completed at this time! Try again');
+      console.error(error);
+    })
+    .catch ((error) => {
+      $("#btnSignIn").html('Sign In');
+      makeToast('Unable to sign in, try again');
+      console.error(error);
+    });
 
   });
 
@@ -81,20 +182,94 @@ $( document ).ready ( function () {
       makeToast("Entry description is required");
       return false;
     }
-
+    const payload = {
+      title: $("#title").val(),
+      description: $("#desc").val(),
+      conclusion: $("#conclude").val(),
+    }
     $("#submit").html('<i class="fa fa-spinner fa-spin"></i> Wait');
     if ($("#submit").val() == "add") {
       //http POST request to add new entry
-      //demo
-      setTimeout(function(){ $("#submit").html('<i class="fa fa-save"></i> Add Entry'); makeToast("Entry added successfully"); }, 5000);
+      const url = `${base_url}/${sessionStorage.userId}/entries`;
+      let fetchData = { 
+        method: 'POST', 
+        body: JSON.stringify(payload),
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          "x-access-token": sessionStorage.token,
+        }
+      };
+
+      fetch(url, fetchData)
+      .then((resp) => resp.json(), (error) => {
+        $("#submit").html('<i class="fa fa-save"></i>&nbsp;Add Entry');
+        makeToast('Add entry cannot be completed at this time! Try again');
+        console.error(error);
+      })
+      .then((data) => {
+        if (data.status == 'success') {
+          $("#submit").html('<i class="fa fa-save"></i>&nbsp;Add Entry');
+          makeToast(data.message);
+          fetchAllEntries();
+          console.log(data);
+        } else {
+          $("#submit").html('<i class="fa fa-save"></i>&nbsp;Add Entry');
+          makeToast(data.message);
+          console.log(data);
+        }
+      }, (error) => {
+        $("#submit").html('<i class="fa fa-save"></i>&nbsp;Add Entry');
+        makeToast('Add entry cannot be completed at this time! Try again');
+        console.error(error);
+      })
+      .catch ((error) => {
+        $("#submit").html('<i class="fa fa-save"></i>&nbsp;Add Entry');
+        makeToast('Unable to add entry, try again');
+        console.error(error);
+      });
     } else {
       //http PUT request to modify entry
-      //demo
-      setTimeout(function(){ $("#submit").html('<i class="fa fa-save"></i> Save Changes'); makeToast("Entry updated successfully"); }, 5000);
+      const url = `${base_url}/${sessionStorage.userId}/entries`;
+      let fetchData = { 
+        method: 'PUT', 
+        body: JSON.stringify(payload),
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          "x-access-token": sessionStorage.token,
+        }
+      };
+
+      fetch(url, fetchData)
+      .then((resp) => resp.json(), (error) => {
+        $("#submit").html('<i class="fa fa-save"></i>&nbsp;Save Changes');
+        makeToast('Modify entry cannot be completed at this time! Try again');
+        console.error(error);
+      })
+      .then((data) => {
+        if (data.status == 'success') {
+          $("#submit").html('<i class="fa fa-save"></i>&nbsp;Save Changes');
+          makeToast(data.message);
+          fetchAllEntries();
+          console.log(data);
+        } else {
+          $("#submit").html('<i class="fa fa-save"></i>&nbsp;Save Changes');
+          makeToast(data.message);
+          console.log(data);
+        }
+      }, (error) => {
+        $("#submit").html('<i class="fa fa-save"></i>&nbsp;Save Changes');
+        makeToast('Modify entry cannot be completed at this time! Try again');
+        console.error(error);
+      })
+      .catch ((error) => {
+        $("#submit").html('<i class="fa fa-save"></i>&nbsp;Save Changes');
+        makeToast('Unable to modify entry, try again');
+        console.error(error);
+      });
     }
   });
 
-  $("#searchForm").on("submit", function () {
+  /* $("#searchForm").on("submit", function () {
     if ($("#mySearch").val().trim() != "") {
       //http GET request to search entry data-store
       //demo
@@ -111,7 +286,7 @@ $( document ).ready ( function () {
 
     $("#savePic").html('<i class="fa fa-spinner fa-spin"></i>');
     setTimeout(function(){ $("#savePic").html('<i class="fa fa-save"></i> Save'); }, 5000);
-  });
+  }); */
 
 });
 

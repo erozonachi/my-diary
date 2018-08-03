@@ -12,7 +12,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
    </head>
    
-   <body>
+   <body class="bg-img">
       <main>
           <header>
                 <div class="nav" id="nav">
@@ -29,10 +29,8 @@
                 </div>
           </header>
           <section>
-                <a class="hiddenanchor" id="toReset"></a>
-                <a class="hiddenanchor" id="toSignin"></a>
-                <div id="signin" class="animate form-container">
               <form id="signInForm" onsubmit="return false;">
+                    <div id="" class="form-container">
                     <h1>Sign In</h1>
                     <div id="toast"></div>
                         <label for="name"><b>Your Username</b></label>
@@ -49,11 +47,11 @@
                     
                         <button type="submit" id="btnSignIn" class="big-btn"><i class="fa fa-lock"></i>&nbsp;Sign In</button>
                         <div><strong>Don't have an account? <a href="signup.html">Sign up</a> | Forgot Password? <a href="#toReset">Click me</a></strong></div>
+                    </div>
                     </form>
-                </div>
 
-                <div id="reset" class="animate form-container">
-                <form id="resetForm" onsubmit="return false;">
+                    <!--form id="resetForm" onsubmit="return false;">
+                    <div id="" class="form-container">
                         <h1>Reset Password</h1><br/>
                         <div id="otpGroup" class="">
                             <label for="name"><b>Your Email</b></label>
@@ -86,11 +84,12 @@
                     
                         <button type="submit" id="btnReset" class="big-btn"><i id="resetSpin" class="fa fa-lock"></i>&nbsp;Request OTP</button>
                         <div><strong>Don't have an account? <a href="signup.html">Sign up</a> | Have an account? <a href="#toSignin">Sign in</a></strong></div>
-                    </form>
-                </div>
+                    </div>
+                    </form-->
           </section>
       </main>
       <script type="text/javascript" src="../js/interactive.js"></script>
+      <script type="text/javascript" src="../js/fetchAPI.js"></script>
       <script type="text/javascript" src="../js/jquery.js"></script>
    </body>
    
