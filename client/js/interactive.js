@@ -10,7 +10,7 @@ function makeToast (message) {
     setTimeout(function(){ $("#toast").removeClass("show") }, 4000);
   }
 
-  function signIn() {
+  const signIn = function() {
     const username = document.getElementById('username');
     const password = document.getElementById('password');
     const btnLogin = document.getElementById('btnSignIn');
