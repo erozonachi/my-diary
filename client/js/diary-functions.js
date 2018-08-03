@@ -16,6 +16,7 @@ function openEditForm (id, title, desc, conclude) {
   $("#submit").html('<i class="fa fa-save"></i>&nbsp;Save Changes');
 }
 function resetEntryForm () {
+  document.getElementById('entryId').value = '';
   $("#entryId").val("");
   $("#title").val("");
   $("#desc").val("");
@@ -24,23 +25,8 @@ function resetEntryForm () {
   $("#submit").html('<i class="fa fa-save"></i>&nbsp;Add Entry');
 }
 
-const entryList = [
-  {
-      "id": 2,
-      "title": "My Paris Trip",
-      "desc": "I enjoyed every moment of it, France made my year",
-      "conclude": "That was cool",
-      "date": "10-09-2016"
-  },
-  {
-      "id": 3,
-      "title": "My Isreal Visit",
-      "desc": "I was wow in Jeruselem",
-      "conclude": "Solomon's temple is out of this world, really a place to...",
-      "date": "15-06-2017"
-  }
-];
 function renderEntryList (list) {
+  document.getElementById("myUL").innerHTML = '';
   list.forEach(element => {
       const span = document.createElement("span");
       let txt = document.createTextNode(element["title"]+" - "+element["created_at"].replace('T',' ').replace('.000Z',''));
@@ -76,7 +62,7 @@ function renderEntryList (list) {
       readDiv.appendChild(titleHolder);
 
       const strong2 = document.createElement("strong");
-      txt = document.createTextNode("Description: ");
+      txt = document.createTextNode("Content: ");
       strong2.appendChild(txt);
       readDiv.appendChild(strong2);
       const descHolder = document.createElement("div");
@@ -153,7 +139,8 @@ function renderEntryList (list) {
 }
 
 function fetchAllEntries() {
-  const url = `${base_url}/${sessionStorage.userId}/entries`;
+  
+  const url = `${base_url}/entries`;
   const noEntry = document.getElementById('noEntry');
   const fetchData = { 
     method: 'GET',

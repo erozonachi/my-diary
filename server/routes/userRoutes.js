@@ -11,6 +11,6 @@ import UserValidation from '../helpers/validatelib/UserValidation';
 import UserController from '../controllers/UserController';
 
 export default function userRoutes(app) {
-  // POST /api/v1/users
-  app.post(`${Constants.apiBaseURL}/:userId/notify/:setNotice`, AuthController.isAuthenticated, UserValidation.reminder, UserController.setReminder);
+  // POST /api/v1/users/notify/setNotice
+  app.post(`${Constants.apiBaseURL}/notify/:setNotice`, AuthController.isAuthenticated, UserValidation.reminder, UserController.setReminder);
 }

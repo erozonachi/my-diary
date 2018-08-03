@@ -41,19 +41,16 @@
                       <label class="white" for="title"><b>Entry Title</b></label>
                     <div class="tooltip">
                       <input type="text" id="title" name="title" placeholder="Give entry a title" required>
-                      <span class="tooltiptext">Title not more than 50 characters</span>
                     </div>
                       
                       <label class="white" for="desc"><b>Description</b></label>
                     <div class="tooltip">
                       <textarea id="desc" name="desc" placeholder="Describe entry" required></textarea>
-                      <span class="tooltiptext">Describe entry</span>
                     </div>
                       
                       <label class="white" for="conclude"><b>Conclusion (optional)</b></label>
                       <div class="tooltip">
                         <input type="text" id="conclude" name="conclude" placeholder="Conclude entry">
-                        <span class="tooltiptext">Conclude entry (not required)</span>
                     </div>
                       
                       <button type="submit" id="submit" class="submit" value="add"><i class="fa fa-save"></i>&nbsp;Add Entry</button>
@@ -76,14 +73,14 @@
                 <div id="userProfile" class="animate">
                   <div class="space-up">
                     <center><img class="logo" src="../images/logo.png"/></center>
-                    <center><h2>User Profile</h2></center>
-                    <center>Welcome <strong>James</strong></center>
-                    <center>Registered Email <strong>erozonachi.james@gmail.com</strong></center>
-                    <center>Your have <strong>100 entries</strong> since registration</center>
+                    <br/>
+                    <center>Welcome <strong id="ProfileName"></strong></center>
+                    <!-- <center>Registered Email <strong id="userEmail"></strong></center>
+                    <center>Your have <strong>100 entries</strong> since registration</center> -->
                   </div>
                   <img src="../images/avatar.jpg" alt="Eneh James" class="avatar center">
                   <div>
-                    <form id="picForm" enctype="multipart/form-data" onsubmit="return false;">
+                    <!-- <form id="picForm" enctype="multipart/form-data" onsubmit="return false;">
                       <center><div class="space-up">
                     <div class="tooltip">
                         <input type="file" id="profilePic" name="profilePic" accept="image/png, image/jpeg, image/gif" required/>
@@ -92,7 +89,7 @@
                         <button type="submit" id="savePic" class="submit"><i class="fa fa-save"></i>&nbsp;Save</button>
                       </div></center>
                       <hr/>
-                    </form>
+                    </form> -->
                   </div>
                   <div><label class="check-container"> Notify me everyday, to add new entry to my diary.
                         <input type="checkbox" name="notify" id="notify" value="">
@@ -101,7 +98,6 @@
                 </div></div>
       </main>
       <script type="text/javascript" src="../js/interactive.js"></script>
-      <script type="text/javascript" src="../js/fetchAPI.js"></script>
       <script type="text/javascript" src="../js/jquery.js"></script>
       <script type="text/javascript" src="../js/diary-functions.js"></script>
    </body>

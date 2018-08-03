@@ -11,16 +11,22 @@ import * as Constants from '../helpers/Constants';
 import Mail from '../helpers/Mail';
 
 export default {
+  /**
+  * Register new user.
+  * @param {object} req - Should contain; firstName, lastName, username, email and password.
+  * @param {object} res - Channel through which results are send to the requesting client.
+  * @return {object} Output of a processed request. Contains status and (success or error) object
+  */
   signUp(req, res) {
     try {
       const user = req.body;
       user.registeredAt = new Date().toLocaleString();
       const createUser = new Promise((resolve, reject) => {
         bcrypt.hash(user.password, Constants.hashSaltRounds).then((hash) => {
-          const connector = new pg.Client(`${process.env.DATABASE_URL}`/* {
+          const connector = new pg.Client({
             connectionString: process.env.DATABASE_URL,
             ssl: true,
-          } */);
+          });
           connector.connect();
           const checkUniqueness = connector.query('SELECT * FROM account WHERE username=($1) OR email=($2)', [user.username, user.email]);
           checkUniqueness.then(result => {
@@ -52,7 +58,7 @@ export default {
         if (result.rowCount <= 0) {
           return res.status(500).json({ status: 'fail', message: Constants.systemError});
         } else {
-          return res.status(201).json({ status: 'success', data: user });
+          return res.status(201).json({ status: 'success', message: 'Account created successfully', data: user });
         }
       }, (error) => {
         if (error.status === 'fail') {
@@ -64,32 +70,38 @@ export default {
       return res.status(500).json({ status: 'fail', message: Constants.systemError});
     }
   },
+  /**
+  * User login .
+  * @param {object} req - Should contain; username and password.
+  * @param {object} res - Channel through which results are send to the requesting client.
+  * @return {object} Output of a processed request. Contains status and (success or error) object
+  */
   signIn(req, res) {
     try {
-      const { loginName, loginPassword } = req.body;
+      const { username, password } = req.body;
       const authResult = {};
-      const connector = new pg.Client(`${process.env.DATABASE_URL}`/* {
+      const connector = new pg.Client( {
         connectionString: process.env.DATABASE_URL,
         ssl: true,
-      } */);
+      });
       connector.connect();
-      const result = connector.query('SELECT * FROM account WHERE username=($1) OR email=($1)', [loginName]);
+      const result = connector.query('SELECT * FROM account WHERE username=($1) OR email=($1)', [username]);
       result.then((result) => {
         if (result.rowCount <= 0){
-          return res.status(401).json({ status: 'fail', message: 'Authentication failed: incorrect username or password' });
+          return res.status(401).json({ status: 'fail', message: 'Incorrect username or password' });
         } else {
           const user = result.rows[0];
           authResult.id = user.acct_id;
           authResult.name = `${user.first_name} ${user.last_name}`;
           authResult.email = user.email;
-          bcrypt.compare(loginPassword, user.password)
+          bcrypt.compare(password, user.password)
           .then((result) => {
             if (!result) {
-              return res.status(401).json({ status: 'fail', message: 'Authentication failed: incorrect username or password' });
+              return res.status(401).json({ status: 'fail', message: 'Incorrect username or password' });
             }
             const tokenPaylod = {
               id: authResult.id,
-              loginName,
+              username,
             }
             const token = jwt.sign(tokenPaylod, process.env.SECRET_KEY, {expiresIn: '1d'});
             if (!token) {
@@ -122,19 +134,23 @@ export default {
       return res.status(500).json({ status: 'fail', message: Constants.systemError});
     }
   },
+  /**
+  * Autthentication check .
+  * @param {object} req - Should contain; username and password.
+  * @param {object} res - Channel through which results are send to the requesting client.
+  * @param {object} next - Calls the controller middleware next to it if the request comes from an authenticated user.
+  * @return {object} Contains status and error object
+  */
   isAuthenticated(req, res, next) {
     const token = req.headers['x-access-token'];
 
     if (token) {
       jwt.verify(token, process.env.SECRET_KEY, (error, decoded) => {
         if (error) {
-          return res.status(401).json({ status: 'fail', message: 'Authentication failed.' });
+          return res.status(401).json({ status: 'fail', message: 'Authentication failed' });
         } else {
-          if (parseInt(req.params.userId, 10) !== parseInt(decoded.id)) {
-            return res.status(401).json({ status: 'fail', message: 'Compromised access token'});
-          } else {
-            next();
-          }
+          req.params.userId = parseInt(decoded.id, 10);
+          next();
         }
       });
     } else {

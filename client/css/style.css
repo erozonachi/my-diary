@@ -255,7 +255,7 @@ button:hover {
     margin-top: 10px;
     margin-bottom: 15px;
     cursor: pointer;
-    font-size: 90%;
+    font-size: 50%;
     font-weight: bold;
     font-style: italic;
     -webkit-user-select: none;
@@ -624,6 +624,7 @@ ul {
   }
   textarea {
       height: 100px;
+      resize: none;
   }
   
   .submit {

@@ -7,12 +7,15 @@
     "node": "8.9.4"
   },
   "scripts": {
-    "test": "nyc --reporter=html --reporter=text --reporter=lcov mocha --compilers js:babel-core/register server/tests/*.test.js",
+    "test": "nyc --reporter=html --reporter=text --reporter=lcov mocha --compilers js:babel-core/register server/tests/entries.test.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "server": "nodemon server/index.js --exec babel-node",
     "heroku-postbuild": "npm install",
     "start": "babel-node server/index.js",
-    "spin-db": "cd server/models/ & babel-node otp.model.js"
+    "migrate-user": "babel-node server/models/user.model.js",
+    "migrate-entry": "babel-node server/models/entry.model.js",
+    "migrate-setting": "babel-node server/models/setting.model.js",
+    "migration": "npm run migrate-user && npm run migrate-entry && npm run migrate-setting"
   },
   "repository": {
     "type": "git",
