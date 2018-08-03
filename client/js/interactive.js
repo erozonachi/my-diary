@@ -10,9 +10,9 @@ function makeToast (message) {
     setTimeout(function(){ $("#toast").removeClass("show") }, 4000);
   }
   $("#signInForm").on("submit", function () 
-     const username = document.getElementById('username');
-    const password = document.getElementById('password');
-    const btnLogin = document.getElementById('btnSignIn');
+     var username = document.getElementById('username');
+    var password = document.getElementById('password');
+    var btnLogin = document.getElementById('btnSignIn');
     if(username.value.trim() == "") {
       makeToast("Username is required");
       return false;
@@ -24,12 +24,12 @@ function makeToast (message) {
 
     btnLogin.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Authenticating';
     //http request
-    const payload = {
+    var payload = {
       username: username.value,
       password: password.value
     };
-    const url = `${base_url}/auth/login`;
-    let fetchData = { 
+    var url = `${base_url}/auth/login`;
+    var fetchData = { 
       method: 'POST', 
       body: JSON.stringify(payload),
       headers: {
