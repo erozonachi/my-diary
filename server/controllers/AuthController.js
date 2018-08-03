@@ -26,10 +26,10 @@ export default {
           checkUniqueness.then(result => {
             if (result.rowCount > 0) {
               if (result.rows[0].username === user.username) {
-                const error = {status: 'failed', message: 'Username is taken'};
+                const error = {status: 'fail', message: 'Username is taken'};
                 reject(error);
               } else {
-                const error = {status: 'failed', message: 'Email already in use'};
+                const error = {status: 'fail', message: 'Email already in use'};
                 reject(error);
               }
             } else {
@@ -50,18 +50,18 @@ export default {
       });
       createUser.then((result) => {
         if (result.rowCount <= 0) {
-          return res.status(500).json({ status: 'failed', message: Constants.systemError});
+          return res.status(500).json({ status: 'fail', message: Constants.systemError});
         } else {
-          return res.status(201).json({ status: 'succeeded', data: user });
+          return res.status(201).json({ status: 'success', data: user });
         }
       }, (error) => {
-        if (error.status === 'failed') {
+        if (error.status === 'fail') {
           return res.status(400).json(error);
         }
-        return res.status(500).json({ status: 'failed', message: Constants.systemError});
+        return res.status(500).json({ status: 'fail', message: Constants.systemError});
       });
     } catch (error) {
-      return res.status(500).json({ status: 'failed', message: Constants.systemError});
+      return res.status(500).json({ status: 'fail', message: Constants.systemError});
     }
   },
   signIn(req, res) {
@@ -76,7 +76,7 @@ export default {
       const result = connector.query('SELECT * FROM account WHERE username=($1) OR email=($1)', [loginName]);
       result.then((result) => {
         if (result.rowCount <= 0){
-          return res.status(401).json({ status: 'failed', message: 'Invalid login credentials' });
+          return res.status(401).json({ status: 'fail', message: 'Authentication failed: incorrect username or password' });
         } else {
           const user = result.rows[0];
           authResult.id = user.acct_id;
@@ -85,7 +85,7 @@ export default {
           bcrypt.compare(loginPassword, user.password)
           .then((result) => {
             if (!result) {
-              return res.status(401).json({ status: 'failed', message: 'Invalid login credentials' });
+              return res.status(401).json({ status: 'fail', message: 'Authentication failed: incorrect username or password' });
             }
             const tokenPaylod = {
               id: authResult.id,
@@ -93,7 +93,7 @@ export default {
             }
             const token = jwt.sign(tokenPaylod, process.env.SECRET_KEY, {expiresIn: '1d'});
             if (!token) {
-              return res.status(500).json({ status: 'failed', message: Constants.systemError});
+              return res.status(500).json({ status: 'fail', message: Constants.systemError});
             } else {
               const reminderMsg = {
                 from: "noreply.appmydiary@gmail.com",
@@ -106,20 +106,20 @@ export default {
                   else if (info) {  return info; }
               });
               authResult.accessToken = token;
-              return res.status(200).json({ status: 'succeeded', data: authResult });
+              return res.status(200).json({ status: 'success', message: 'Logged in successfully', data: authResult });
             }
           }, (error) => {
-            return res.status(500).json({ status: 'failed', message: Constants.systemError});
+            return res.status(500).json({ status: 'fail', message: Constants.systemError});
           })
         }
       }, (error) => {
-        return res.status(500).json({ status: 'failed', message: Constants.systemError});
+        return res.status(500).json({ status: 'fail', message: Constants.systemError});
       })
       .catch((error) => {
-        return res.status(500).json({ status: 'failed', message: Constants.systemError});
+        return res.status(500).json({ status: 'fail', message: Constants.systemError});
       });
     } catch (error) {
-      return res.status(500).json({ status: 'failed', message: Constants.systemError});
+      return res.status(500).json({ status: 'fail', message: Constants.systemError});
     }
   },
   isAuthenticated(req, res, next) {
@@ -128,19 +128,19 @@ export default {
     if (token) {
       jwt.verify(token, process.env.SECRET_KEY, (error, decoded) => {
         if (error) {
-          return res.status(401).json({ status: 'failed', message: 'Authentication failed.' });
+          return res.status(401).json({ status: 'fail', message: 'Authentication failed.' });
         } else {
           if (parseInt(req.params.userId, 10) !== parseInt(decoded.id)) {
-            return res.status(401).json({ status: 'failed', message: 'Compromised access token'});
+            return res.status(401).json({ status: 'fail', message: 'Compromised access token'});
           } else {
             next();
           }
         }
       });
     } else {
-      return res.status(403).send({ 
-        status: 'failed', 
-        message: 'Not authenticated',
+      return res.status(401).send({ 
+        status: 'fail', 
+        message: 'User not authenticated',
       });
     }
   }

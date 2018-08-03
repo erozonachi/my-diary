@@ -15,6 +15,10 @@
 
 }
 
+body {
+    background-color: rgba(124,124,124,1.0)
+}
+
 main, header, section, article, div, input {
 
     clear : left;
@@ -64,6 +68,7 @@ header {
 
 a {
     text-decoration: none;
+    color: #cc9933;
 }
 
 .nav {
@@ -117,7 +122,7 @@ a {
 
 .bg-img {
     background-image: url("../images/banner.jpg");
-    min-height: 630px;
+    min-height: 657px;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -165,10 +170,21 @@ a {
 .form-container {
     clear: left;
     display: block;
-    width: 60%;
-    height: 100%;
-    margin: 50px 20%;
+    /* height: 100%; */
     padding: 10px;
+    background-color: #fff;
+}
+.entries-container {
+    width: 90%;
+    margin: 30px 5%;
+    padding: 0;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.5);
+   /*  overflow-y: scroll; */
+}
+.form-container {
+    width: 40%;
+    margin: 50px 30%;
 }
 #dashboard-header {
     display: none;
@@ -183,16 +199,22 @@ a {
     z-index: 1;
     top: 0;
     overflow-x: hidden;
+    margin: 0;
+    padding: 0;
   }
   .left {
     width: 20%;
     left: 0;
-    background-color: #333;
+    background: rgba(0, 0, 0, 0.5);
     color: #eee;
+    margin: 0;
+    padding: 0;
   }
   .right {
     width: 80%;
     right: 0;
+    margin: 0;
+    padding: 0;
   }
   
   .container {
@@ -213,7 +235,7 @@ input[type=text], input[type=password], input[type=email] {
 }
 
 .big-btn {
-    background-color: #4CAF50;
+    background-color: #333333;
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
@@ -287,6 +309,7 @@ button:hover {
     transform: rotate(45deg);
 }
   #footer {
+      margin-top: 40px;
       background: #333;
       padding: 25px;
       color: #fff;
@@ -385,7 +408,7 @@ button:hover {
 	-o-animation-name: scaleOut;
 	animation-name: scaleOut;
 }
-/* Coined from W3Schools */
+/* Coined from W3Schools.com */
 .animate{
 	-webkit-animation-duration: 0.5s;
 	-webkit-animation-fill-mode: both;
@@ -413,8 +436,9 @@ ul {
     clear: left;
     float: left;
     display: block;
-    max-width: 100%;
-    padding: 10px 10px 0px 4px;
+    width: 100%;
+    padding: 10px 0px;
+    margin: 0;
     list-style-type: none;
     background: #eee;
     font-size: 18px;
@@ -439,33 +463,32 @@ ul {
   }
   li div .listHead span {
       float: left;
-      margin: 0 5px;
+      padding: 0 5px;
       font-size: 14pt;
       max-width: 60%;
   }
   li div .listHead button {
       float: right;
       cursor: pointer;
-      margin: 0 5px;
+     margin: 0 5px;
       padding: 2px 5px;
       border: none;
       border-radius: 5px;
       outline: none;
   }
   li div .listHead del {
+      display: block;
       max-width: 25%;
   }
   li div .listHead toggle {
+      display: block;
       max-width: 15%;
   }
   
   .danger {
       background: #f44336;
   }
-  
-  li div input[type=checkbox] {
-      margin: 0;
-  }
+
   
   ul li:nth-child(odd) {
     background: #f9f9f9;
@@ -475,13 +498,24 @@ ul {
     background: #ddd;
   }
   .header {
-    background-color: #cc9933;
+    background-color: inherit;
     padding: 30px 40px 10px 40px;
   }
-  
-  .header:after {
-    content: "";
+  .entry-detail {
+      clear: left;
+      font-size: 100%;
+      color: #fff;
+      padding: 5px;
+      border-radius: 5px;
+      text-align: justify;
+      margin-bottom: 5px;
   }
+.odd {
+    background: rgba(204, 153, 51, 0.5);
+}
+.even {
+    background: rgba(0, 0, 0, 0.5);
+}
   
   .header h2 {
     margin:5px;
@@ -593,24 +627,26 @@ ul {
   }
   
   .submit {
-      background-color: #4CAF50;
-      color: white;
+      background-color: #ddd;
+      color: #333;
       max-width: 150px;
       padding: 12px 20px;
       border: none;
       border-radius: 4px;
       cursor: pointer;
   }
+  .white {
+      color: #fff;
+  }
   .space-up {
     margin-top: 20px;
   }
 
 #toast {
-    visibility: hidden;
-    max-width: 350px;
-    min-width: 350px;
+    display: none;
     background-color: #333;
     color: #fff;
+    width: 100%;
     text-align: center;
     border-radius: 5px;
     padding: 16px;
@@ -619,9 +655,16 @@ ul {
 }
 
 #toast.show {
-    visibility: visible;
+    display: block;
     -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
     animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+#noEntry {
+    text-align: center;
+    color: #331212;
+    font-size: 15pt;
+    font-weight: bold;
 }
 
 @-webkit-keyframes aboutMove {
@@ -821,8 +864,8 @@ ul {
         right: 0;
       }
       .form-container {
-        width: 80%;
-        margin: auto 10%;
+        width: 50%;
+        margin: 20px 25%;
         padding: 5px;
         box-shadow: none;
     }
@@ -858,8 +901,8 @@ ul {
         right: 0;
       }
       .form-container {
-        width: 100%;
-        margin: auto;
+        width: 60%;
+        margin: 10px 20%;
         padding: 5px;
         box-shadow: none;
     }
@@ -908,7 +951,7 @@ ul {
 
     .form-container {
         width: 90%;
-        margin: auto 5%;
+        margin: 10px 5%;
         padding: 5px;
     }
 

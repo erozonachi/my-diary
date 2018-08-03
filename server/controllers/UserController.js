@@ -19,7 +19,7 @@ export default {
         connector.connect();
         const result = connector.query('SELECT * FROM setting WHERE acct_id=($1)', [userId]);
         result.then((result) => {
-          const reminderStatus = setNotice === 'on'? true : false;
+          const reminderStatus = String.toString(setNotice).toLowerCase() === 'on'? true : false;
           if (result.rowCount > 0) {
             const reminderResult = connector.query('UPDATE setting SET reminder_status=($1) WHERE acct_id=($2)', [reminderStatus, userId]);
             reminderResult.then((result) => {
@@ -41,15 +41,15 @@ export default {
       });
       toggleReminder.then((result) => {
         if (result.rowCount <= 0) {
-          return res.status(500).json({ status: 'failed', message: Constants.systemError });
+          return res.status(500).json({ status: 'fail', message: Constants.systemError });
         } else {
-          return res.status(200).json({ status: 'succeeded', message: `Daily reminder turned ${setNotice}` });
+          return res.status(200).json({ status: 'success', message: `Daily reminder turned ${setNotice}` });
         }
       }, (error) => {
-        return res.status(500).json({ status: 'failed', message: error.message /* Constants.systemError */});
+        return res.status(500).json({ status: 'fail', message: error.message /* Constants.systemError */});
       });
     } catch (error) {
-      return res.status(500).json({ status: 'failed', message: error.message /* Constants.systemError */});
+      return res.status(500).json({ status: 'fail', message: error.message /* Constants.systemError */});
     }
   }
 };
