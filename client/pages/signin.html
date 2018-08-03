@@ -4,19 +4,19 @@
    <head>
         <meta charset = "UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
-        <link rel="shortcut icon" href="user/images/logo.png" type="image/x-icon">
+        <link rel="shortcut icon" href="../images/logo.png" type="image/x-icon">
         <meta name="description" content="My Diary Application">
         <title>MyDiary</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel = "stylesheet" type = "text/css" href = "user/css/style.css">
+        <link rel = "stylesheet" type = "text/css" href = "../css/style.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
    </head>
    
-   <body>
+   <body class="bg-img">
       <main>
           <header>
                 <div class="nav" id="nav">
-                    <a href="index.html"><img src="user/images/logo.png" id="app-logo"/>
+                    <a href="index.html"><img src="../images/logo.png" id="app-logo"/>
                     <span id="app-name">MyDiary</span></a>          
                     <a href="index.html">Home</a>
                     <a href="signup.html">Sign Up</a>
@@ -29,31 +29,27 @@
                 </div>
           </header>
           <section>
-                <a class="hiddenanchor" id="toReset"></a>
-                <a class="hiddenanchor" id="toSignin"></a>
-                <div id="signin" class="animate form-container">
               <form id="signInForm" onsubmit="return false;">
+                    <div id="" class="form-container">
                     <h1>Sign In</h1>
                     <div id="toast"></div>
-                        <label for="name"><b>Your Username</b></label>
+                        <label for="name"><b>Username</b></label>
                         <div class="tooltip">
                             <input type="text" placeholder="Username" id="username" name="username" required>
-                            <span class="tooltiptext">Your username or email</span>
                         </div>
                     
-                        <label for="psw"><b>Your Password</b></label>
+                        <label for="psw"><b>Password</b></label>
                         <div class="tooltip">
                             <input type="password" placeholder="Password" id="password" name="password" required>
-                            <span class="tooltiptext">Your password</span>
                         </div>
                     
-                        <button type="submit" id="btnSignIn" class="big-btn"><i class="fa fa-lock"></i>&nbsp;Sign In</button>
+                        <button type="submit" id="btnSignIn" class="big-btn" onclick="signIn();"><i class="fa fa-lock"></i>&nbsp;Sign In</button>
                         <div><strong>Don't have an account? <a href="signup.html">Sign up</a> | Forgot Password? <a href="#toReset">Click me</a></strong></div>
+                    </div>
                     </form>
-                </div>
 
-                <div id="reset" class="animate form-container">
-                <form id="resetForm" onsubmit="return false;">
+                    <!--form id="resetForm" onsubmit="return false;">
+                    <div id="" class="form-container">
                         <h1>Reset Password</h1><br/>
                         <div id="otpGroup" class="">
                             <label for="name"><b>Your Email</b></label>
@@ -86,12 +82,13 @@
                     
                         <button type="submit" id="btnReset" class="big-btn"><i id="resetSpin" class="fa fa-lock"></i>&nbsp;Request OTP</button>
                         <div><strong>Don't have an account? <a href="signup.html">Sign up</a> | Have an account? <a href="#toSignin">Sign in</a></strong></div>
-                    </form>
-                </div>
+                    </div>
+                    </form-->
           </section>
       </main>
-      <script type="text/javascript" src="user/js/interactive.js"></script>
-      <script type="text/javascript" src="user/js/jquery.js"></script>
+      <script type="text/javascript" src="../js/interactive.js"></script>
+      <script type="text/javascript" src="../js/fetchAPI.js"></script>
+      <script type="text/javascript" src="../js/jquery.js"></script>
    </body>
    
 </html>

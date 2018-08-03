@@ -4,24 +4,23 @@
    <head>
         <meta charset = "UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
-        <link rel="shortcut icon" href="user/images/logo.png" type="image/x-icon">
+        <link rel="shortcut icon" href="../images/logo.png" type="image/x-icon">
         <meta name="description" content="MyDiary Application">
         <title>MyDiary</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel = "stylesheet" type = "text/css" href = "user/css/style.css">
+        <link rel = "stylesheet" type = "text/css" href = "../css/style.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
    </head>
    
-   <body>
+   <body class="bg-img">
       <main>
           <header>
             <div class="nav" id="nav">
-                <a href="javascript:void(0);"><img src="user/images/logo.png" id="app-logo"/>
+                <a href="javascript:void(0);"><img src="../images/logo.png" id="app-logo"/>
                 <span id="app-name">MyDiary</span></a>          
                 <a href="javascript:void(0);" id="active">Home</a>
                 <a href="signup.html">Sign Up</a>
                 <a href="signin.html">Sign In</a>
-                <a href="user/dashboard.html">Dashboard</a>
                 <a href="javascript:void(0);" class="icon" onclick="toggleMenu(this)">
                     <!--i class="fa fa-bars"></i-->
                     <div class="bar1"></div>
@@ -36,7 +35,7 @@
                     <p>Keep your Feelings and Thoughts alive, by saving them on "My Diary App". Only you have access to your 
                         saved entries in your diary, you can delete or modify your diary entries and the App also has 
                         a quick search feature that allows quick access to entry or group of entries, you want to work on at the 
-                        moment!<br/><br/><h3>It's Personally crafted, just for you... <br/><br/>Don't have an account? <strong><a href="signup.html">Sign up</a></strong></h3>
+                        moment!<br/><br/><h3>It's Personally crafted, just for you... <br/><br/></h3>
                     </p>
                 </article>
                 <article class="desktop-content">
@@ -49,30 +48,36 @@
                 </article>
                 <form id="signUpForm" action="" onsubmit="return false;">
                 <div class="container">
-                        <h1>Sign Up</h1>
+                        <h1>Sign Up</h1><br/>
                         <div id="toast"></div>
-                        <label for="name"><b>Choose a Username</b></label>
+                        <label for="fName"><b>First Name</b></label>
                         <div class="tooltip">
-                            <input type="text" placeholder="Choose a Username" name="username" id="username" required>
-                            <span class="tooltiptext">Username must begin with a letter</span>
+                            <input type="text" placeholder="Enter Your First Name" name="fName" id="fName" required>
                         </div>
 
-                        <label for="email"><b>Your Email</b></label>
+                        <label for="lName"><b>Last Name</b></label>
+                        <div class="tooltip">
+                            <input type="text" placeholder="Enter Your Last Name" name="lName" id="lName" required>
+                        </div>
+
+                        <label for="username"><b>Username</b></label>
+                        <div class="tooltip">
+                            <input type="text" placeholder="Choose a Username" name="username" id="username" required>
+                        </div>
+
+                        <label for="email"><b>Email</b></label>
                         <div class="tooltip">
                             <input type="email" placeholder="Enter Your Email" id="email" name="email" required>
-                            <span class="tooltiptext">Provide active an email address</span>
                         </div>
                     
-                        <label for="psw"><b>Choose Password</b></label>
+                        <label for="psw"><b>Password</b></label>
                         <div class="tooltip">
                             <input type="password" placeholder="Choose Password" id="password" name="password" required>
-                            <span class="tooltiptext">Min character length of 10. Digit and letter mix</span>
                         </div>
                     
                         <label for="psw"><b>Confirm Password</b></label>
                         <div class="tooltip">
                             <input type="password" placeholder="Confirm Password" id="confirm" name="confirm" required>
-                            <span class="tooltiptext">Re-enter above password</span>
                         </div>
                     
                         <label class="check-container">By clicking "Sign Up", you agree to our service terms &amp; conditions.
@@ -85,11 +90,11 @@
                 </div>
             </form>
           </section>
-          <section><article><img id="andela-logo" src="user/images/andela.png"/><span class="heavy">Developer Challenge</span></article></section>
           <section><article id="footer">All rights reserved, <strong>MyDiary</strong> &copy; 2018</article></section>
       </main>
-      <script type="text/javascript" src="user/js/interactive.js"></script>
-      <script type="text/javascript" src="user/js/jquery.js"></script>
+      <script type="text/javascript" src="../js/interactive.js"></script>
+      <script type="text/javascript" src="../js/fetchAPI.js"></script>
+      <script type="text/javascript" src="../js/jquery.js"></script>
    </body>
    
 </html>

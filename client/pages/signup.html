@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang = "en">
+   
+   <head>
+        <meta charset = "UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+        <link rel="shortcut icon" href="../images/logo.png" type="image/x-icon">
+        <meta name="description" content="MyDiary Application">
+        <title>MyDiary</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel = "stylesheet" type = "text/css" href = "../css/style.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+   </head>
+   
+   <body class="bg-img">
+      <main>
+          <header>
+                <div class="nav" id="nav">
+                    <a href="index.html"><img src="../images/logo.png" id="app-logo"/>
+                    <span id="app-name">MyDiary</span></a>          
+                    <a href="index.html">Home</a>
+                    <a href="#" id="active">Sign Up</a>
+                    <a href="signin.html">Sign In</a>
+                    <a href="javascript:void(0);" class="icon" onclick="toggleMenu(this)">
+                        <div class="bar1"></div>
+                        <div class="bar2"></div>
+                        <div class="bar3"></div>
+                    </a>
+                </div>
+          </header>
+          <section>
+              <form id="signUpForm" onsubmit="return false;">
+              <div class="form-container">
+                    <h1>Sign Up</h1><br/>
+                    <div id="toast"></div>
+                    <label for="fName"><b>First Name</b></label>
+                    <div class="tooltip">
+                        <input type="text" placeholder="Enter Your First Name" name="fName" id="fName" required>
+                    </div>
+
+                    <label for="lName"><b>Last Name</b></label>
+                    <div class="tooltip">
+                        <input type="text" placeholder="Enter Your Last Name" name="lName" id="lName" required>
+                    </div>
+
+                    <label for="name"><b>Username</b></label>
+                    <div class="tooltip">
+                        <input type="text" placeholder="Choose a Username" name="username" id="username" required>
+                    </div>
+
+                    <label for="email"><b>Email</b></label>
+                    <div class="tooltip">
+                        <input type="email" placeholder="Enter Your Email" id="email" name="email" required>
+                    </div>
+                
+                    <label for="psw"><b>Password</b></label>
+                    <div class="tooltip">
+                        <input type="password" placeholder="Choose Password" id="password" name="password" required>
+                    </div>
+                
+                    <label for="psw"><b>Confirm Password</b></label>
+                    <div class="tooltip">
+                        <input type="password" placeholder="Confirm Password" id="confirm" name="confirm" required>
+                    </div>
+                
+                    <label class="check-container">By clicking "Sign Up", you agree to our service terms &amp; conditions.
+                        <input type="checkbox" name="terms" id="terms" value="" required>
+                        <span class="checkmark"></span>
+                    </label>
+                
+                    <button type="submit" id="btnSignUp" class="big-btn">Sign Up</button>
+                    <div><strong>Have an account? <a href="signin.html">Sign in</a></strong></div>
+                </div>
+                </form>
+          </section>
+      </main>
+      <script type="text/javascript" src="../js/interactive.js"></script>
+      <script type="text/javascript" src="../js/fetchAPI.js"></script>
+      <script type="text/javascript" src="../js/jquery.js"></script>
+   </body>
+   
+</html>

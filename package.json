@@ -1,0 +1,59 @@
+{
+  "name": "my-diary",
+  "version": "1.0.0",
+  "description": "A repo for an online journal where users can pen down their thoughts and feelings.",
+  "main": "index.js",
+  "engines": {
+    "node": "8.9.4"
+  },
+  "scripts": {
+    "test": "nyc --reporter=html --reporter=text --reporter=lcov mocha --compilers js:babel-core/register server/tests/entries.test.js",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "server": "nodemon server/index.js --exec babel-node",
+    "heroku-postbuild": "npm install",
+    "start": "babel-node server/index.js",
+    "migrate-user": "babel-node server/models/user.model.js",
+    "migrate-entry": "babel-node server/models/entry.model.js",
+    "migrate-setting": "babel-node server/models/setting.model.js",
+    "migration": "npm run migrate-user && npm run migrate-entry && npm run migrate-setting"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/erozonachi/my-diary.git"
+  },
+  "author": "Eneh, James Erozonachi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/erozonachi/my-diary/issues"
+  },
+  "homepage": "https://github.com/erozonachi/my-diary#readme",
+  "dependencies": {
+    "bcrypt": "^3.0.0",
+    "body-parser": "^1.18.3",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "jsonwebtoken": "^8.3.0",
+    "node-cron": "^1.2.1",
+    "nodemailer": "^4.6.7",
+    "pg": "^7.4.3"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^8.2.6",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^6.24.1",
+    "chai": "^4.1.2",
+    "chai-http": "^4.0.0",
+    "coveralls": "^3.0.2",
+    "eslint": "^5.1.0",
+    "eslint-config-airbnb": "^17.0.0",
+    "eslint-config-airbnb-standard": "^2.1.6",
+    "eslint-plugin-react": "^7.10.0",
+    "istanbul": "^0.4.5",
+    "mocha": "^5.2.0",
+    "nodemon": "^1.18.3",
+    "nyc": "^12.0.2",
+    "rimraf": "^2.6.2"
+  }
+}
